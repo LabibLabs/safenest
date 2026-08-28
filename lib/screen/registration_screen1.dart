@@ -696,7 +696,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
 
 
----
+
 // PHONE NUMBER
 // ------------------------------------------------
 
@@ -826,6 +826,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
       ),
     );
+  }
+  // DISPOSE CONTROLLERS
+  // ----------------------------------------------------------
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    dobController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
+
+    super.dispose();
   }
 }
 

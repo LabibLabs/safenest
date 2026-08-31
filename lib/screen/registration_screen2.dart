@@ -107,3 +107,81 @@ label: 'Allergies',
 controller: _allergiesController,
 hint: 'e.g., Penicillin, Peanuts',
 ),
+
+const SizedBox(height: 20),
+_labeledOutlinedField(
+label: 'Chronic Conditions',
+controller: _chronicConditionsController,
+hint: 'e.g., Diabetes, Hypertension',
+),
+
+const SizedBox(height: 20),
+const Text('Preferred Language',
+style: TextStyle(
+fontWeight: FontWeight.w600, fontSize: 14)),
+const SizedBox(height: 10),
+Row(
+children: [
+_buildLanguageButton('English'),
+const SizedBox(width: 12),
+_buildLanguageButton('Bangla'),
+],
+),
+const SizedBox(height: 10),
+],
+),
+),
+),
+
+
+Padding(
+padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+child: Row(
+children: [
+Expanded(
+child: OutlinedButton(
+onPressed: () => Navigator.pop(context),
+style: OutlinedButton.styleFrom(
+padding: const EdgeInsets.symmetric(vertical: 16),
+side: const BorderSide(color: Colors.grey),
+shape: RoundedRectangleBorder(
+borderRadius: BorderRadius.circular(10),
+),
+),
+child: const Text('Back',
+style: TextStyle(color: Colors.black87)),
+),
+),
+const SizedBox(width: 14),
+Expanded(
+child: ElevatedButton(
+onPressed: _onContinuePressed,
+style: ElevatedButton.styleFrom(
+backgroundColor: kPrimaryGreen,
+padding: const EdgeInsets.symmetric(vertical: 16),
+shape: RoundedRectangleBorder(
+borderRadius: BorderRadius.circular(10),
+),
+),
+child: const Row(
+mainAxisAlignment: MainAxisAlignment.center,
+children: [
+Text('Continue',
+style: TextStyle(
+color: Colors.white,
+fontWeight: FontWeight.w600)),
+SizedBox(width: 6),
+Icon(Icons.arrow_forward,
+color: Colors.white, size: 18),
+],
+),
+),
+),
+],
+),
+),
+],
+),
+),
+);
+}

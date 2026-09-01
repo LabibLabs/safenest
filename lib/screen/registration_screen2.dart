@@ -185,3 +185,61 @@ color: Colors.white, size: 18),
 ),
 );
 }
+
+Widget _buildHeader() {
+return Container(
+width: double.infinity,
+padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+decoration: const BoxDecoration(
+gradient: LinearGradient(
+begin: Alignment.topLeft,
+end: Alignment.bottomRight,
+colors: [Color(0xFF1FA774), Color(0xFF2E86DE)],
+),
+),
+child: Column(
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+const Text(
+'Step 2 of 3',
+style: TextStyle(color: Colors.white70, fontSize: 13),
+),
+const SizedBox(height: 6),
+const Text(
+'Medical Info',
+style: TextStyle(
+fontSize: 24,
+fontWeight: FontWeight.bold,
+color: Colors.white,
+),
+),
+const SizedBox(height: 14),
+_buildProgressBar(),
+],
+),
+);
+}
+
+
+Widget _buildProgressBar() {
+return Row(
+children: [
+Expanded(child: _progressSegment(true)),
+const SizedBox(width: 6),
+Expanded(child: _progressSegment(true)),
+const SizedBox(width: 6),
+Expanded(child: _progressSegment(false)),
+],
+);
+}
+
+Widget _progressSegment(bool active) {
+return Container(
+height: 5,
+decoration: BoxDecoration(
+color: active ? Colors.white : Colors.white.withOpacity(0.4),
+borderRadius: BorderRadius.circular(3),
+),
+);
+}
+

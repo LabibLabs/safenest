@@ -138,12 +138,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               builder: (context)=>RegistrationScreen1(),
                             ),
                           );
+                          Future.delayed(
+                            Duration(milliseconds: 100),
+                              (){
+                                setState(() {
+                                  registerButton=false;
+                                });
+                              }
+                          );
                         },
                       );
-                    }
-                    else if(!haveAnAccountButton&&registerButton)
-                    {
-                      registerButton=false;
                     }
                   });
                 },
@@ -178,10 +182,26 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     if(!registerButton&&!haveAnAccountButton)
                     {
                       haveAnAccountButton=true;
-                    }
-                    else if(!registerButton&&haveAnAccountButton)
-                    {
-                      haveAnAccountButton=false;
+                      Future.delayed(
+                        Duration(milliseconds: 200),
+                            (){
+                          if(!context.mounted)return;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context)=>RegistrationScreen1(),
+                            ),
+                          );
+                          Future.delayed(
+                              Duration(milliseconds: 100),
+                                  (){
+                                setState(() {
+                                  haveAnAccountButton=false;
+                                });
+                              }
+                          );
+                        },
+                      );
                     }
                   });
                 },

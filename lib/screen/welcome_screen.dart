@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safenest/screen/registration_screen_1.dart';
 class WelcomeScreen extends StatefulWidget
 {
   const WelcomeScreen({super.key});
@@ -127,6 +128,18 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     if(!haveAnAccountButton&&!registerButton)
                     {
                       registerButton=true;
+                      Future.delayed(
+                        Duration(milliseconds: 200),
+                            (){
+                          if(!context.mounted)return;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context)=>RegistrationScreen1(),
+                            ),
+                          );
+                        },
+                      );
                     }
                     else if(!haveAnAccountButton&&registerButton)
                     {

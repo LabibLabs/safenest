@@ -625,7 +625,7 @@ class _PrivacyAndPermissionScreen extends State<PrivacyAndPermissionScreen>
                     }
                   });
                   Future.delayed(
-                    Duration(milliseconds: 300),
+                    Duration(milliseconds: 200),
                       (){
                         if(!context.mounted)return;
                         Navigator.pushReplacement(

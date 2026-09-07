@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safenest/screen/login_screen.dart';
 import 'package:safenest/screen/registration_screen_1.dart';
 class WelcomeScreen extends StatefulWidget
 {
@@ -189,7 +190,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context)=>RegistrationScreen1(),
+                              builder: (context)=>LoginScreen(),
                             ),
                           );
                           Future.delayed(

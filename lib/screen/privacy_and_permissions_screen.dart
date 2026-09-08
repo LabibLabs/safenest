@@ -622,20 +622,20 @@ class _PrivacyAndPermissionScreen extends State<PrivacyAndPermissionScreen>
                   setState(() {
                     if(understandButton) {
                       continueButton = true;
+                      Future.delayed(
+                          Duration(milliseconds: 200),
+                              (){
+                            if(!context.mounted)return;
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder:(context)=>WelcomeScreen(),
+                              ),
+                            );
+                          }
+                      );
                     }
                   });
-                  Future.delayed(
-                    Duration(milliseconds: 200),
-                      (){
-                        if(!context.mounted)return;
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder:(context)=>WelcomeScreen(),
-                          ),
-                        );
-                      }
-                  );
                 },
               style: ElevatedButton.styleFrom(
                 backgroundColor: continueButton?Colors.green:Colors.grey,

@@ -10,7 +10,15 @@ class LoginScreen extends StatefulWidget
 class _LoginScreenState extends State<LoginScreen> {
   final phoneController= TextEditingController();
   bool phoneNumberFill=false;
+  bool validPhoneNumber=false;
   String ?phone;
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsGeometry.all(6),
+                          padding: EdgeInsets.all(6),
                           child: Icon(
                             Icons.circle,
                             color: Colors.black,
@@ -139,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 30,
                           ),
                           Text(
-                            "Enter your Phone Number",
+                            validPhoneNumber?"Enter valid Phone Number":"Enter your Phone Number",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 13,
@@ -196,7 +204,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 height: 50,
                                 child: TextField(
                                   controller: phoneController,
+                                  maxLength: 11,
+                                  keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -223,13 +234,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ElevatedButton(
                           onPressed: (){
                             setState(() {
-                              if(phoneController.text.isEmpty)
+                              if(phoneController.text.isEmpty|| phoneController.text.length != 11)
                                 {
+                                  if(phoneController.text.isEmpty)
+                                    {
+                                      validPhoneNumber=false;
+                                    }
+                                  else
+                                    {
+                                      validPhoneNumber=true;
+                                    }
                                   phoneNumberFill=true;
                                 }
                               else if(phoneController.text.isNotEmpty)
                                 {
                                   phoneNumberFill=false;
+                                  phone=phoneController.text;
                                   if(!context.mounted) return;
                                   Navigator.push(
                                       context,

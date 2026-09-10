@@ -377,7 +377,7 @@ class _Registration1State extends State<RegistrationScreen1> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:(context)=>RegistrationScreen2(),
+                                  builder:(context)=>RegistrationScreen2(phone: phoneNumber,),
                                 )
                             );
                           }

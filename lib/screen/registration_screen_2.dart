@@ -1,9 +1,13 @@
 //this code is written by human
 import 'package:flutter/material.dart';
-import 'package:safenest/screen/registration_screen_1.dart';
+import 'package:safenest/screen/registration_screen_3.dart';
 class RegistrationScreen2 extends StatefulWidget
 {
-  const RegistrationScreen2({super.key});
+  final String? phone;
+  const RegistrationScreen2({
+    required this.phone,
+    super.key,
+  });
 
   @override
   State<RegistrationScreen2> createState()=>_RegistrationScreen2State();
@@ -888,9 +892,6 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         onPressed:(){
                           Navigator.pop(
                             context,
-                            MaterialPageRoute(
-                                builder: (context)=>RegistrationScreen1(),
-                            )
                           );
                         },
 
@@ -939,6 +940,12 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               weight=weightController.text;
                               allergies=allergiesController.text;
                               chronicConditions=chronicConditionsController.text;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context)=>RegistrationScreen3(phone:widget.phone)
+                                )
+                              );
                             }
                           });
                         },

@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
+import "package:safenest/screen/otp_screen.dart";
 import "package:safenest/screen/registration_screen_1.dart";
-import "package:safenest/screen/welcome_screen.dart";
+import "package:safenest/screen/otp_screen.dart";
 class LoginScreen extends StatefulWidget
 {
   const LoginScreen({super.key});
@@ -254,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context)=>WelcomeScreen(),
+                                        builder: (context)=>OTPScreen(phone: phone,),
                                       )
                                   );
                                 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safenest/screen/privacy_policy.dart';
 import 'welcome_screen.dart';
 //Note: this code is written by human
 class PrivacyAndPermissionScreen extends StatefulWidget
@@ -609,7 +610,13 @@ class _PrivacyAndPermissionScreen extends State<PrivacyAndPermissionScreen>
                   ),
                 ),
                 TextButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context)=>PrivacyPolicy())
+                      );
+                    },
                     child:Text(
                       "Privacy Policy",
                     )

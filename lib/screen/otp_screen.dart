@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safenest/screen/main_screen.dart';
 class OTPScreen extends StatefulWidget
 {
   final String? phone;
@@ -568,6 +569,11 @@ class _OTPScreenState extends State<OTPScreen>
                       {
                         otpFill=true;
                         clickIcon=true;
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context)=>MainScreen()
+                          )
+                        );
                         Future.delayed(
                           Duration(seconds: 30),
                             (){

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safenest/screen/otp_screen.dart';
 
@@ -144,12 +145,18 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                   flex: 2,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OTPScreen(phone: widget.phone),
-                        ),
-                      );
+                      () async {
+                        await FirebaseAuth.instance.verifyPhoneNumber(
+                          verificationCompleted: (PhoneAuthCredential credential) {},
+                          verificationFailed: (FirebaseAuthException error) {},
+                          codeSent: (String verificationId, int? forceResendingToken) {
+                            Navigator.push(context,MaterialPageRoute(builder: ((context) => OTPScreen(phone:  widget.phone,
+                              verificationId: verificationId,))));
+                          },
+                          codeAutoRetrievalTimeout: (String verificationId) {},
+                          phoneNumber: widget.phone!,
+                        );
+                      }();
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

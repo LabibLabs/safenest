@@ -426,38 +426,38 @@ class _OTPScreenState extends State<OTPScreen> {
                 TextButton(
                   onPressed: resentAppear
                       ? () {
-                    if (otp1.text.isNotEmpty &&
-                        otp2.text.isNotEmpty &&
-                        otp3.text.isNotEmpty &&
-                        otp4.text.isNotEmpty &&
-                        otp5.text.isNotEmpty &&
-                        otp6.text.isNotEmpty) {
-                      resentAppear = false;
-
-                      Future.delayed(Duration(seconds: 30), () {
-                        setState(() {
-                          if (otp1.text.isNotEmpty ||
-                              otp2.text.isNotEmpty ||
-                              otp3.text.isNotEmpty ||
-                              otp4.text.isNotEmpty ||
-                              otp5.text.isNotEmpty ||
+                          if (otp1.text.isNotEmpty &&
+                              otp2.text.isNotEmpty &&
+                              otp3.text.isNotEmpty &&
+                              otp4.text.isNotEmpty &&
+                              otp5.text.isNotEmpty &&
                               otp6.text.isNotEmpty) {
-                            resentAppear = true;
+                            resentAppear = false;
+
+                            Future.delayed(Duration(seconds: 30), () {
+                              setState(() {
+                                if (otp1.text.isNotEmpty ||
+                                    otp2.text.isNotEmpty ||
+                                    otp3.text.isNotEmpty ||
+                                    otp4.text.isNotEmpty ||
+                                    otp5.text.isNotEmpty ||
+                                    otp6.text.isNotEmpty) {
+                                  resentAppear = true;
+                                }
+                              });
+                            });
+                            otp1.clear();
+                            otp2.clear();
+                            otp3.clear();
+                            otp4.clear();
+                            otp5.clear();
+                            otp6.clear();
+                            FocusScope.of(context).requestFocus(focus1);
+                          } else {
+                            resentAppear = false;
                           }
-                        });
-                      });
-                      otp1.clear();
-                      otp2.clear();
-                      otp3.clear();
-                      otp4.clear();
-                      otp5.clear();
-                      otp6.clear();
-                      FocusScope.of(context).requestFocus(focus1);
-                    } else {
-                      resentAppear = false;
-                    }
-                    setState(() {});
-                  }
+                          setState(() {});
+                        }
                       : null,
                   child: Text(
                     "Resend OTP in 30 seconds",
@@ -484,20 +484,20 @@ class _OTPScreenState extends State<OTPScreen> {
                         otp6.text.isNotEmpty) {
                       otp =
                           otp1.text +
-                              otp2.text +
-                              otp3.text +
-                              otp4.text +
-                              otp5.text +
-                              otp6.text;
+                          otp2.text +
+                          otp3.text +
+                          otp4.text +
+                          otp5.text +
+                          otp6.text;
                       otpFill = true;
                       clickIcon = true;
                       () async {
                         try {
                           PhoneAuthCredential credential =
                               await PhoneAuthProvider.credential(
-                            verificationId: widget.verificationId,
-                            smsCode: otp,
-                          );
+                                verificationId: widget.verificationId,
+                                smsCode: otp,
+                              );
                           FirebaseAuth.instance.signInWithCredential(credential).then((value){
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => MainScreen())));
                           });

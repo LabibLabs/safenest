@@ -151,7 +151,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                           verificationFailed: (FirebaseAuthException error) {},
                           codeSent: (String verificationId, int? forceResendingToken) {
                             Navigator.push(context,MaterialPageRoute(builder: ((context) => OTPScreen(phone:  widget.phone,
-                              verificationId: verificationId,))));
+                            verificationId: verificationId,))));
                           },
                           codeAutoRetrievalTimeout: (String verificationId) {},
                           phoneNumber: widget.phone!,

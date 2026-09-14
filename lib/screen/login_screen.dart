@@ -237,37 +237,37 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: (){
                             setState(() {
                               if(phoneController.text.isEmpty|| phoneController.text.length != 11)
-                              {
-                                if(phoneController.text.isEmpty)
                                 {
-                                  validPhoneNumber=false;
+                                  if(phoneController.text.isEmpty)
+                                    {
+                                      validPhoneNumber=false;
+                                    }
+                                  else
+                                    {
+                                      validPhoneNumber=true;
+                                    }
+                                  phoneNumberFill=true;
                                 }
-                                else
-                                {
-                                  validPhoneNumber=true;
-                                }
-                                phoneNumberFill=true;
-                              }
                               else if(phoneController.text.isNotEmpty)
-                              {
-                                phoneNumberFill=false;
-                                phone="+88${phoneController.text}";
-                                () async {
-                                  await FirebaseAuth.instance.verifyPhoneNumber(
-                                    verificationCompleted: (PhoneAuthCredential credential) {},
-                                    verificationFailed: (FirebaseAuthException error) {
-                                      print("Firebase Auth Error: ${error.code}");
-                                      print("Message: ${error.message}");
-                                    },
-                                    codeSent: (String verificationId, int? forceResendingToken) {
-                                      Navigator.push(context,MaterialPageRoute(builder: ((context) => OTPScreen(phone:  phone,
+                                {
+                                  phoneNumberFill=false;
+                                  phone="+88${phoneController.text}";
+                                  () async {
+                                    await FirebaseAuth.instance.verifyPhoneNumber(
+                                      verificationCompleted: (PhoneAuthCredential credential) {},
+                                      verificationFailed: (FirebaseAuthException error) {
+                                        print("Firebase Auth Error: ${error.code}");
+                                        print("Message: ${error.message}");
+                                      },
+                                      codeSent: (String verificationId, int? forceResendingToken) {
+                                        Navigator.push(context,MaterialPageRoute(builder: ((context) => OTPScreen(phone:  phone,
                                         verificationId: verificationId,))));
-                                    },
-                                    codeAutoRetrievalTimeout: (String verificationId) {},
-                                    phoneNumber: phone!,
-                                  );
-                                }();
-                              }
+                                      },
+                                      codeAutoRetrievalTimeout: (String verificationId) {},
+                                      phoneNumber: phone!,
+                                    );
+                                  }();
+                                }
                             });
                           },
 
@@ -310,22 +310,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     //Registration button
                     TextButton(
-                      onPressed: (){
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(
-                              builder: (context)=>RegistrationScreen1(),
-                            )
-                        );
-                      },
+                        onPressed: (){
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(
+                                  builder: (context)=>RegistrationScreen1(),
+                              )
+                          );
+                        },
 
-                      child: Text(
-                        "Register Now",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.green,
+                        child: Text(
+                          "Register Now",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.green,
+                          ),
                         ),
-                      ),
                     )
                   ],
                 )

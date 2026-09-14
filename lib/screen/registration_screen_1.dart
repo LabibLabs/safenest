@@ -279,9 +279,11 @@ class _Registration1State extends State<RegistrationScreen1> {
                             child: TextFormField(
                               controller: phoneController,
                               keyboardType: TextInputType.phone,
+                              maxLength: 11,
                               validator: (value) => (value == null || value.isEmpty) ? "Enter your phone number" : null,
                               decoration: InputDecoration(
                                 hintText: "01XXXXXXXXX",
+                                counterText: "",
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(13)),
                               ),

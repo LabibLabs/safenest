@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:safenest/screen/otp_screen.dart";
 import "package:safenest/screen/registration_screen_1.dart";
-import "package:safenest/screen/otp_screen.dart";
+
 class LoginScreen extends StatefulWidget
 {
   const LoginScreen({super.key});

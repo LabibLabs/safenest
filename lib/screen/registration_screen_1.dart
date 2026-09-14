@@ -373,7 +373,7 @@ class _Registration1State extends State<RegistrationScreen1> {
 
                           if (formKey.currentState!.validate() && checkGender) {
                             name = nameController.text;
-                            phoneNumber = phoneController.text;
+                            phoneNumber = "+88$phoneController.text";
                             address = addressController.text;
                             if(!context.mounted)return;
                             Navigator.push(

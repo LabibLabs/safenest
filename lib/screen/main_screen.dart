@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:safenest/screen/home/home_screen.dart';
-import 'package:safenest/screen/otp_screen.dart';
 
 class MainScreen extends StatefulWidget
 {
@@ -13,7 +12,6 @@ class _MainScreenState extends State<MainScreen>
   int _selectedIndex=0;
   final List<Widget> _screens=[
     HomeScreen(),
-    OTPScreen(phone: "01756993242"),
     //MedicinesScreen(),
     //HealthScreen(),
     //SettingsScreen(),

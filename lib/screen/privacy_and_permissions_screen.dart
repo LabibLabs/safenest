@@ -55,7 +55,7 @@ class _PrivacyAndPermissionScreen extends State<PrivacyAndPermissionScreen>
                   SizedBox(
                     width: 10,
                   ),
-                  Column(
+                  Column(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: 18,

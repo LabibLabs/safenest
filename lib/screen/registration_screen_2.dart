@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:safenest/screen/registration_screen_3.dart';
 class RegistrationScreen2 extends StatefulWidget
 {
-  final String? phone;
+   final String? phone;
   const RegistrationScreen2({
     required this.phone,
     super.key,
@@ -943,7 +943,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context)=>RegistrationScreen3(phone:widget.phone)
+                                    builder: (context)=>RegistrationScreen3(userPhone:widget.phone)
                                 )
                               );
                             }

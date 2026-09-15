@@ -6,7 +6,7 @@ import 'package:safenest/screen/main_screen.dart';
 
 class OTPScreen extends StatefulWidget {
   final String? phone;
-  String verificationId;
+  final String verificationId;
   OTPScreen({
     required this.phone,
     required this.verificationId,
@@ -494,7 +494,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       () async {
                         try {
                           PhoneAuthCredential credential =
-                              await PhoneAuthProvider.credential(
+                               PhoneAuthProvider.credential(
                                 verificationId: widget.verificationId,
                                 smsCode: otp,
                               );

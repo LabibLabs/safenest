@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:safenest/screen/otp_screen.dart';
 
 class RegistrationScreen3 extends StatefulWidget {
-  final String? phone;
+  final String? userPhone;
   const RegistrationScreen3(
       {
-        required this.phone,
+        required this.userPhone,
         super.key,
       });
 
@@ -38,44 +38,39 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
             const SizedBox(
               height: 50,
             ),
-
-            // Header Container matching Screen 2
             _buildHeader(),
-
             const SizedBox(
               height: 15,
             ),
-
             Expanded(
-              child: SingleChildScrollView(
+              child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Info banner
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      padding:  EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 15,
                           vertical: 13,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFEFF7F2),
+                          color: Color(0xFFEFF7F2),
                           borderRadius: BorderRadius.circular(13),
                         ),
-                        child: const Text(
+                        child: Text(
                           'This person will be called in case of emergency or SOS. You can add more contacts later.',
                           style: TextStyle(
                             color: Colors.black87,
                             fontSize: 14,
-                            height: 1.4,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
 
                     _labeledOutlinedField(
                       label: 'Contact Name',
@@ -83,7 +78,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       hint: 'e.g. Priya Kumar',
                     ),
 
-                    const SizedBox(height: 15),
+                     SizedBox(height: 15),
 
                     _labeledOutlinedField(
                       label: 'Relationship',
@@ -91,7 +86,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       hint: 'e.g. Daughter, Son, Spouse',
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
 
                     _labeledOutlinedField(
                       label: 'Phone Number',
@@ -100,16 +95,15 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       keyboardType: TextInputType.phone,
                     ),
 
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                   ],
                 ),
               ),
             ),
 
-            // Bottom navigation buttons matching Screen 2 sizing and styling
             Row(
               children: [
-                const SizedBox(
+                SizedBox(
                   width: 25,
                 ),
 
@@ -121,12 +115,12 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13),
                       ),
-                      minimumSize: const Size(
+                      minimumSize: Size(
                         double.infinity,
                         48,
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Back",
                       style: TextStyle(
                         color: Colors.green,
@@ -137,7 +131,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                   ),
                 ),
 
-                const SizedBox(
+                SizedBox(
                   width: 15,
                 ),
 
@@ -148,13 +142,16 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       () async {
                         await FirebaseAuth.instance.verifyPhoneNumber(
                           verificationCompleted: (PhoneAuthCredential credential) {},
-                          verificationFailed: (FirebaseAuthException error) {},
+                          verificationFailed: (FirebaseAuthException error) {
+                            print("OTP ERROR: ${error.code}");
+                            print("OTP MESSAGE: ${error.message}");
+                          },
                           codeSent: (String verificationId, int? forceResendingToken) {
-                            Navigator.push(context,MaterialPageRoute(builder: ((context) => OTPScreen(phone:  widget.phone,
+                            Navigator.push(context,MaterialPageRoute(builder: ((context) => OTPScreen(phone:  widget.userPhone,
                             verificationId: verificationId,))));
                           },
                           codeAutoRetrievalTimeout: (String verificationId) {},
-                          phoneNumber: widget.phone!,
+                          phoneNumber: widget.userPhone!,
                         );
                       }();
                     },
@@ -162,7 +159,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13),
                       ),
-                      minimumSize: const Size(
+                      minimumSize: Size(
                         double.infinity,
                         48,
                       ),
@@ -171,7 +168,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "Send OTP",
                           style: TextStyle(
                             color: Colors.white,
@@ -179,10 +176,10 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           width: 8,
                         ),
-                        const Icon(
+                        Icon(
                           Icons.arrow_forward,
                           color: Colors.white,
                           size: 23,
@@ -192,13 +189,13 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                   ),
                 ),
 
-                const SizedBox(
+                 SizedBox(
                   width: 25,
                 ),
               ],
             ),
 
-            const SizedBox(
+            SizedBox(
               height: 20,
             ),
           ],
@@ -211,10 +208,10 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
     return Container(
       width: double.infinity,
       height: 125,
-      padding: const EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         horizontal: 30,
       ),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Colors.green,
@@ -229,11 +226,11 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
+          SizedBox(
             height: 22,
           ),
 
-          const Text(
+          Text(
             "Step 3 of 3",
             style: TextStyle(
               color: Colors.white,
@@ -241,7 +238,6 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
               fontWeight: FontWeight.w500,
             ),
           ),
-
           const Text(
             "Emergency Contact",
             style: TextStyle(
@@ -250,8 +246,6 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
               fontSize: 27,
             ),
           ),
-
-          // Progress indicator with all 3 steps filled
           Row(
             children: [
               Container(
@@ -277,7 +271,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                 width: 8,
               ),
               Container(
-                width: 40,
+                width: 55,
                 height: 6,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -301,24 +295,24 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: EdgeInsets.symmetric(horizontal: 25),
           child: Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 18,
             ),
           ),
         ),
-        const SizedBox(height: 7),
+        SizedBox(height: 7),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: EdgeInsets.symmetric(horizontal: 25),
           child: TextField(
             controller: controller,
             keyboardType: keyboardType,
             decoration: InputDecoration(
               hintText: hint,
-              contentPadding: const EdgeInsets.symmetric(
+              contentPadding: EdgeInsets.symmetric(
                 horizontal: 15,
                 vertical: 13,
               ),

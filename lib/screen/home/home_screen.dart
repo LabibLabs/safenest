@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:safenest/screen/add_medicine.dart';
+
 import 'package:safenest/screen/home/get_age.dart';
 import 'package:safenest/screen/home/get_gender.dart';
 import 'package:safenest/screen/home/get_step_walk.dart';
@@ -462,11 +462,7 @@ class _HomeScreenState extends State<HomeScreen>
                   flex: 1,
                   child:InkWell(
                       onTap: (){
-                        
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context)=>AddMedicine())
-                        );
+
                       },
                       borderRadius: BorderRadius.circular(10),
                       child: Column(

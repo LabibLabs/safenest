@@ -1,36 +1,55 @@
 //this code is written by human
 import 'package:flutter/material.dart';
 import 'package:safenest/screen/registration_screen_3.dart';
-class RegistrationScreen2 extends StatefulWidget
-{
-   final String? phone;
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class RegistrationScreen2 extends StatefulWidget {
+  final String? phone;
+
   const RegistrationScreen2({
     required this.phone,
     super.key,
   });
 
   @override
-  State<RegistrationScreen2> createState()=>_RegistrationScreen2State();
+  State<RegistrationScreen2> createState() => _RegistrationScreen2State();
 }
-class _RegistrationScreen2State extends State<RegistrationScreen2>
-{
 
-  final formKey=GlobalKey<FormState>();
-  final heightController=TextEditingController();
-  final weightController=TextEditingController();
-  final allergiesController=TextEditingController();
-  final chronicConditionsController=TextEditingController();
+class _RegistrationScreen2State extends State<RegistrationScreen2> {
+
+  final formKey = GlobalKey<FormState>();
+  final heightController = TextEditingController();
+  final weightController = TextEditingController();
+  final allergiesController = TextEditingController();
+  final chronicConditionsController = TextEditingController();
 
   String ?bloodGroup;
   String ?height;
   String ?weight;
   String ?allergies;
   String ?chronicConditions;
-  bool checkBloodGroup=true;
+  bool checkBloodGroup = true;
+
+  //add medical details.Creating a new method
+  Future<void> saveMedicalData(String height,
+      String weight,
+      String bloodGroup,
+      String allergies,
+      String chronicConditions,
+      String? phone,) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'height': height,
+      'weight': weight,
+      'bloodGroup': bloodGroup,
+      'allergies': allergies,
+      'chronicConditions': chronicConditions,
+      'phone': phone,
+      'createdAt': FieldValue.serverTimestamp(),}
+    );
+  }
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
       //full screen container
       body: Container(
@@ -55,7 +74,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
 
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                      colors:[
+                      colors: [
                         Colors.green,
                         Colors.blue,
                       ],
@@ -205,9 +224,8 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         Expanded(
                           flex: 1,
                           child: TextFormField(
-                            validator: (value){
-                              if(value==null||value.isEmpty)
-                              {
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
                                 return "Enter your Height";
                               }
                               return null;
@@ -233,11 +251,10 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         ),
 
                         Expanded(
-                          flex:1,
+                          flex: 1,
                           child: TextFormField(
-                            validator: (value){
-                              if(value==null||value.isEmpty)
-                              {
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
                                 return "Enter your Height";
                               }
                               return null;
@@ -322,22 +339,21 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         //1st blood group button
                         Expanded(
                           child: ElevatedButton(
-                            onPressed:(){
+                            onPressed: () {
                               setState(() {
-                                if(bloodGroup==null||!(bloodGroup=="A+"))
-                                {
-                                  bloodGroup="A+";
+                                if (bloodGroup == null ||
+                                    !(bloodGroup == "A+")) {
+                                  bloodGroup = "A+";
                                 }
-                                else
-                                {
-                                  bloodGroup=null;
+                                else {
+                                  bloodGroup = null;
                                 }
                               });
                             },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              (!(bloodGroup==null)&&bloodGroup=="A+")
+                              (!(bloodGroup == null) && bloodGroup == "A+")
                                   ? Colors.green
                                   : Colors.white,
 
@@ -357,7 +373,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               "A+",
                               style: TextStyle(
                                 color:
-                                (!(bloodGroup==null)&&bloodGroup=="A+")
+                                (!(bloodGroup == null) && bloodGroup == "A+")
                                     ? Colors.white
                                     : Colors.green,
 
@@ -375,22 +391,21 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         //2nd blood group button
                         Expanded(
                           child: ElevatedButton(
-                            onPressed:(){
+                            onPressed: () {
                               setState(() {
-                                if(bloodGroup==null||!(bloodGroup=="A-"))
-                                {
-                                  bloodGroup="A-";
+                                if (bloodGroup == null ||
+                                    !(bloodGroup == "A-")) {
+                                  bloodGroup = "A-";
                                 }
-                                else
-                                {
-                                  bloodGroup=null;
+                                else {
+                                  bloodGroup = null;
                                 }
                               });
                             },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              (!(bloodGroup==null)&&bloodGroup=="A-")
+                              (!(bloodGroup == null) && bloodGroup == "A-")
                                   ? Colors.green
                                   : Colors.white,
 
@@ -410,7 +425,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               "A-",
                               style: TextStyle(
                                 color:
-                                (!(bloodGroup==null)&&bloodGroup=="A-")
+                                (!(bloodGroup == null) && bloodGroup == "A-")
                                     ? Colors.white
                                     : Colors.green,
 
@@ -428,22 +443,21 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         //3rd blood group button
                         Expanded(
                           child: ElevatedButton(
-                            onPressed:(){
+                            onPressed: () {
                               setState(() {
-                                if(bloodGroup==null||!(bloodGroup=="B+"))
-                                {
-                                  bloodGroup="B+";
+                                if (bloodGroup == null ||
+                                    !(bloodGroup == "B+")) {
+                                  bloodGroup = "B+";
                                 }
-                                else
-                                {
-                                  bloodGroup=null;
+                                else {
+                                  bloodGroup = null;
                                 }
                               });
                             },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              (!(bloodGroup==null)&&bloodGroup=="B+")
+                              (!(bloodGroup == null) && bloodGroup == "B+")
                                   ? Colors.green
                                   : Colors.white,
 
@@ -463,7 +477,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               "B+",
                               style: TextStyle(
                                 color:
-                                (!(bloodGroup==null)&&bloodGroup=="B+")
+                                (!(bloodGroup == null) && bloodGroup == "B+")
                                     ? Colors.white
                                     : Colors.green,
 
@@ -481,22 +495,21 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         //4th blood group button
                         Expanded(
                           child: ElevatedButton(
-                            onPressed:(){
+                            onPressed: () {
                               setState(() {
-                                if(bloodGroup==null||!(bloodGroup=="B-"))
-                                {
-                                  bloodGroup="B-";
+                                if (bloodGroup == null ||
+                                    !(bloodGroup == "B-")) {
+                                  bloodGroup = "B-";
                                 }
-                                else
-                                {
-                                  bloodGroup=null;
+                                else {
+                                  bloodGroup = null;
                                 }
                               });
                             },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              (!(bloodGroup==null)&&bloodGroup=="B-")
+                              (!(bloodGroup == null) && bloodGroup == "B-")
                                   ? Colors.green
                                   : Colors.white,
 
@@ -516,7 +529,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               "B-",
                               style: TextStyle(
                                 color:
-                                (!(bloodGroup==null)&&bloodGroup=="B-")
+                                (!(bloodGroup == null) && bloodGroup == "B-")
                                     ? Colors.white
                                     : Colors.green,
 
@@ -547,22 +560,21 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         //5th blood group button
                         Expanded(
                           child: ElevatedButton(
-                            onPressed:(){
+                            onPressed: () {
                               setState(() {
-                                if(bloodGroup==null||!(bloodGroup=="AB+"))
-                                {
-                                  bloodGroup="AB+";
+                                if (bloodGroup == null ||
+                                    !(bloodGroup == "AB+")) {
+                                  bloodGroup = "AB+";
                                 }
-                                else
-                                {
-                                  bloodGroup=null;
+                                else {
+                                  bloodGroup = null;
                                 }
                               });
                             },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              (!(bloodGroup==null)&&bloodGroup=="AB+")
+                              (!(bloodGroup == null) && bloodGroup == "AB+")
                                   ? Colors.green
                                   : Colors.white,
 
@@ -582,7 +594,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               "AB+",
                               style: TextStyle(
                                 color:
-                                (!(bloodGroup==null)&&bloodGroup=="AB+")
+                                (!(bloodGroup == null) && bloodGroup == "AB+")
                                     ? Colors.white
                                     : Colors.green,
 
@@ -600,22 +612,21 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         //6th blood group button
                         Expanded(
                           child: ElevatedButton(
-                            onPressed:(){
+                            onPressed: () {
                               setState(() {
-                                if(bloodGroup==null||!(bloodGroup=="AB-"))
-                                {
-                                  bloodGroup="AB-";
+                                if (bloodGroup == null ||
+                                    !(bloodGroup == "AB-")) {
+                                  bloodGroup = "AB-";
                                 }
-                                else
-                                {
-                                  bloodGroup=null;
+                                else {
+                                  bloodGroup = null;
                                 }
                               });
                             },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              (!(bloodGroup==null)&&bloodGroup=="AB-")
+                              (!(bloodGroup == null) && bloodGroup == "AB-")
                                   ? Colors.green
                                   : Colors.white,
 
@@ -635,7 +646,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               "AB-",
                               style: TextStyle(
                                 color:
-                                (!(bloodGroup==null)&&bloodGroup=="AB-")
+                                (!(bloodGroup == null) && bloodGroup == "AB-")
                                     ? Colors.white
                                     : Colors.green,
 
@@ -653,22 +664,21 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         //7th blood group button
                         Expanded(
                           child: ElevatedButton(
-                            onPressed:(){
+                            onPressed: () {
                               setState(() {
-                                if(bloodGroup==null||!(bloodGroup=="O+"))
-                                {
-                                  bloodGroup="O+";
+                                if (bloodGroup == null ||
+                                    !(bloodGroup == "O+")) {
+                                  bloodGroup = "O+";
                                 }
-                                else
-                                {
-                                  bloodGroup=null;
+                                else {
+                                  bloodGroup = null;
                                 }
                               });
                             },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              (!(bloodGroup==null)&&bloodGroup=="O+")
+                              (!(bloodGroup == null) && bloodGroup == "O+")
                                   ? Colors.green
                                   : Colors.white,
 
@@ -688,7 +698,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               "O+",
                               style: TextStyle(
                                 color:
-                                (!(bloodGroup==null)&&bloodGroup=="O+")
+                                (!(bloodGroup == null) && bloodGroup == "O+")
                                     ? Colors.white
                                     : Colors.green,
 
@@ -706,22 +716,21 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                         //8th blood group button
                         Expanded(
                           child: ElevatedButton(
-                            onPressed:(){
+                            onPressed: () {
                               setState(() {
-                                if(bloodGroup==null||!(bloodGroup=="O-"))
-                                {
-                                  bloodGroup="O-";
+                                if (bloodGroup == null ||
+                                    !(bloodGroup == "O-")) {
+                                  bloodGroup = "O-";
                                 }
-                                else
-                                {
-                                  bloodGroup=null;
+                                else {
+                                  bloodGroup = null;
                                 }
                               });
                             },
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                              (!(bloodGroup==null)&&bloodGroup=="O-")
+                              (!(bloodGroup == null) && bloodGroup == "O-")
                                   ? Colors.green
                                   : Colors.white,
 
@@ -741,7 +750,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                               "O-",
                               style: TextStyle(
                                 color:
-                                (!(bloodGroup==null)&&bloodGroup=="O-")
+                                (!(bloodGroup == null) && bloodGroup == "O-")
                                     ? Colors.white
                                     : Colors.green,
 
@@ -889,7 +898,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                   Expanded(
                       flex: 1,
                       child: ElevatedButton(
-                        onPressed:(){
+                        onPressed: () {
                           Navigator.pop(
                             context,
                           );
@@ -924,30 +933,45 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                   Expanded(
                       flex: 2,
                       child: ElevatedButton(
-                        onPressed:(){
+                        onPressed: () async {
                           setState(() {
-                            if(bloodGroup==null)
-                            {
-                              checkBloodGroup=false;
+                            if (bloodGroup == null) {
+                              checkBloodGroup = false;
                             }
-                            else
-                            {
-                              checkBloodGroup=true;
-                            }
-
-                            if (formKey.currentState!.validate()&&checkBloodGroup){
-                              height=heightController.text;
-                              weight=weightController.text;
-                              allergies=allergiesController.text;
-                              chronicConditions=chronicConditionsController.text;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context)=>RegistrationScreen3(userPhone:widget.phone)
-                                )
-                              );
+                            else {
+                              checkBloodGroup = true;
                             }
                           });
+
+                          if (formKey.currentState!.validate() &&
+                              checkBloodGroup) {
+                            height = heightController.text;
+                            weight = weightController.text;
+                            allergies = allergiesController.text;
+                            chronicConditions =
+                                chronicConditionsController.text;
+
+                            await saveMedicalData(
+                              height!,
+                              weight!,
+                              bloodGroup!,
+                              allergies!,
+                              chronicConditions!,
+                              widget.phone,
+                            );
+
+                            if (!context.mounted) return;
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    RegistrationScreen3(
+                                      userPhone: widget.phone,
+                                    ),
+                              ),
+                            );
+                          }
                         },
 
                         style: ElevatedButton.styleFrom(
@@ -986,8 +1010,8 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
                             )
                           ],
                         ),
-                      )
-                  ),
+                      )),
+
 
                   SizedBox(
                     width: 25,
@@ -998,9 +1022,11 @@ class _RegistrationScreen2State extends State<RegistrationScreen2>
               SizedBox(
                 height: 20,
               ),
-            ],
+            ]
+            ,
           )
-      ),
+      )
+      ,
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:safenest/screen/welcome_screen.dart';
 import 'registration_screen_2.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class RegistrationScreen1 extends StatefulWidget {
   const RegistrationScreen1({super.key});
@@ -53,6 +55,24 @@ class _Registration1State extends State<RegistrationScreen1> {
     addressController.dispose();
     super.dispose();
   }
+
+//add user details.Creating a new method
+
+  Future<void> saveUserData(String name,
+      String dateOfBirth,
+      String gender,
+      String phone,
+      String address,) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'name': name,
+      'dateOfBirth': dateOfBirth,
+      'gender': gender,
+      'phone': phone,
+      'address': address,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -361,57 +381,70 @@ class _Registration1State extends State<RegistrationScreen1> {
                 ),
                 const SizedBox(width: 15),
                 Expanded(
-                    flex: 2,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          if (gender.isEmpty) {
-                            checkGender = false;
-                          } else {
-                            checkGender = true;
-                          }
+                  flex: 2,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      setState(() {
+                        if (gender.isEmpty) {
+                          checkGender = false;
+                        } else {
+                          checkGender = true;
+                        }
+                      });
 
-                          if (formKey.currentState!.validate() && checkGender) {
-                            name = nameController.text;
-                            phoneNumber =  "+88${phoneController.text}"  ;
-                            address = addressController.text;
-                            if(!context.mounted)return;
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:(context)=>RegistrationScreen2(phone: phoneNumber,),
-                                )
-                            );
-                          }
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                        minimumSize: const Size(double.infinity, 48),
-                        backgroundColor: Colors.green,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            "Continue",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                      if (formKey.currentState!.validate() && checkGender) {
+                        name = nameController.text;
+                        dateOfBirth = dobController.text;
+                        phoneNumber = "+88${phoneController.text}";
+                        address = addressController.text;
+
+                        await saveUserData(
+                          name,
+                          dateOfBirth,
+                          gender,
+                          phoneNumber,
+                          address,
+                        );
+
+                        if (!context.mounted) return;
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegistrationScreen2(
+                              phone: phoneNumber,
                             ),
                           ),
-                          SizedBox(width: 8),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 23,
-                          )
-                        ],
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(13),
                       ),
-                    )
+                      minimumSize: const Size(double.infinity, 48),
+                      backgroundColor: Colors.green,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Continue",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: 23,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 25),
               ],

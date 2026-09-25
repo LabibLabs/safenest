@@ -1,23 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safenest/screen/otp_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegistrationScreen3 extends StatefulWidget {
   final String? userPhone;
-  const RegistrationScreen3(
-      {
-        required this.userPhone,
-        super.key,
-      });
+
+  const RegistrationScreen3({
+    required this.userPhone,
+    super.key,
+  });
 
   @override
   State<RegistrationScreen3> createState() => _RegistrationScreen3State();
 }
 
 class _RegistrationScreen3State extends State<RegistrationScreen3> {
-  final TextEditingController _contactNameController = TextEditingController();
-  final TextEditingController _relationshipController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _contactNameController =
+  TextEditingController();
+
+  final TextEditingController _relationshipController =
+  TextEditingController();
+
+  final TextEditingController _phoneNumberController =
+  TextEditingController();
 
   @override
   void dispose() {
@@ -25,6 +31,20 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
     _relationshipController.dispose();
     _phoneNumberController.dispose();
     super.dispose();
+  }
+
+// Add emergency contact details. Creating a new method
+  Future<void> saveEmergencyContact(String contactName,
+      String relationship,
+      String emergencyPhone,
+      String? phone,) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'contactName': contactName,
+      'relationship': relationship,
+      'emergencyPhone': emergencyPhone,
+      'phone': phone,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
   }
 
   @override
@@ -38,17 +58,20 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
             const SizedBox(
               height: 50,
             ),
+
             _buildHeader(),
+
             const SizedBox(
               height: 15,
             ),
+
             Expanded(
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: 25),
+                      padding: EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
                         width: double.infinity,
                         padding: EdgeInsets.symmetric(
@@ -70,7 +93,9 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       ),
                     ),
 
-                    SizedBox(height: 15),
+                    SizedBox(
+                      height: 15,
+                    ),
 
                     _labeledOutlinedField(
                       label: 'Contact Name',
@@ -78,7 +103,9 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       hint: 'e.g. Priya Kumar',
                     ),
 
-                     SizedBox(height: 15),
+                    SizedBox(
+                      height: 15,
+                    ),
 
                     _labeledOutlinedField(
                       label: 'Relationship',
@@ -86,7 +113,9 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       hint: 'e.g. Daughter, Son, Spouse',
                     ),
 
-                    SizedBox(height: 15),
+                    SizedBox(
+                      height: 15,
+                    ),
 
                     _labeledOutlinedField(
                       label: 'Phone Number',
@@ -95,7 +124,9 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       keyboardType: TextInputType.phone,
                     ),
 
-                    SizedBox(height: 20),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
@@ -138,23 +169,56 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                 Expanded(
                   flex: 2,
                   child: ElevatedButton(
-                    onPressed: () {
-                      () async {
-                        await FirebaseAuth.instance.verifyPhoneNumber(
-                          verificationCompleted: (PhoneAuthCredential credential) {},
-                          verificationFailed: (FirebaseAuthException error) {
-                            print("OTP ERROR: ${error.code}");
-                            print("OTP MESSAGE: ${error.message}");
-                          },
-                          codeSent: (String verificationId, int? forceResendingToken) {
-                            Navigator.push(context,MaterialPageRoute(builder: ((context) => OTPScreen(phone:  widget.userPhone,
-                            verificationId: verificationId,))));
-                          },
-                          codeAutoRetrievalTimeout: (String verificationId) {},
-                          phoneNumber: widget.userPhone!,
-                        );
-                      }();
+                    onPressed: () async {
+                      String contactName =
+                          _contactNameController.text;
+
+                      String relationship =
+                          _relationshipController.text;
+
+                      String emergencyPhone =
+                          _phoneNumberController.text;
+
+                      await saveEmergencyContact(
+                        contactName,
+                        relationship,
+                        emergencyPhone,
+                        widget.userPhone,
+                      );
+
+                      if (!context.mounted) return;
+
+                      await FirebaseAuth.instance.verifyPhoneNumber(
+                        verificationCompleted:
+                            (PhoneAuthCredential credential) {},
+
+                        verificationFailed:
+                            (FirebaseAuthException error) {
+                          print("OTP ERROR: ${error.code}");
+                          print("OTP MESSAGE: ${error.message}");
+                        },
+
+                        codeSent: (String verificationId,
+                            int? forceResendingToken,) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  OTPScreen(
+                                    phone: widget.userPhone,
+                                    verificationId: verificationId,
+                                  ),
+                            ),
+                          );
+                        },
+
+                        codeAutoRetrievalTimeout:
+                            (String verificationId) {},
+
+                        phoneNumber: widget.userPhone!,
+                      );
                     },
+
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13),
@@ -165,8 +229,10 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       ),
                       backgroundColor: Colors.green,
                     ),
+
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment:
+                      MainAxisAlignment.center,
                       children: [
                         Text(
                           "Send OTP",
@@ -176,9 +242,11 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+
                         SizedBox(
                           width: 8,
                         ),
+
                         Icon(
                           Icons.arrow_forward,
                           color: Colors.white,
@@ -189,7 +257,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                   ),
                 ),
 
-                 SizedBox(
+                SizedBox(
                   width: 25,
                 ),
               ],
@@ -238,6 +306,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
               fontWeight: FontWeight.w500,
             ),
           ),
+
           const Text(
             "Emergency Contact",
             style: TextStyle(
@@ -246,6 +315,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
               fontSize: 27,
             ),
           ),
+
           Row(
             children: [
               Container(
@@ -256,9 +326,11 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+
               const SizedBox(
                 width: 8,
               ),
+
               Container(
                 width: 55,
                 height: 6,
@@ -267,9 +339,11 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+
               const SizedBox(
                 width: 8,
               ),
+
               Container(
                 width: 55,
                 height: 6,
@@ -304,7 +378,11 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
             ),
           ),
         ),
-        SizedBox(height: 7),
+
+        SizedBox(
+          height: 7,
+        ),
+
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 25),
           child: TextField(
@@ -326,3 +404,4 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
     );
   }
 }
+

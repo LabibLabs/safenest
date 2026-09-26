@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safenest/screen/home/home_screen.dart';
+import 'package:safenest/screen/my_medicine_screen.dart';
 
 class MainScreen extends StatefulWidget
 {
@@ -12,7 +13,7 @@ class _MainScreenState extends State<MainScreen>
   int _selectedIndex=0;
   final List<Widget> _screens=[
     HomeScreen(),
-    //MedicinesScreen(),
+    MyMedicineScreen(),
     //HealthScreen(),
     //SettingsScreen(),
   ];
@@ -25,11 +26,11 @@ class _MainScreenState extends State<MainScreen>
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Color(0xFF4F86A3),
           unselectedItemColor: Colors.grey,
-          selectedLabelStyle: const TextStyle(
+          selectedLabelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
           ),
-          unselectedLabelStyle: const TextStyle(
+          unselectedLabelStyle: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),

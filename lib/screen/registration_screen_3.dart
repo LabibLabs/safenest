@@ -390,10 +390,6 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
             keyboardType: keyboardType,
             decoration: InputDecoration(
               hintText: hint,
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 13,
-              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(13),
               ),

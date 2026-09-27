@@ -575,6 +575,8 @@ class _HomeScreenState extends State<HomeScreen>
                       children: [
                         Ink(
                           padding: EdgeInsets.all(6),
+                          width: 110,
+                          height: 110,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
@@ -611,6 +613,8 @@ class _HomeScreenState extends State<HomeScreen>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Ink(
+                            width: 110,
+                            height: 110,
                             padding: EdgeInsets.all(6),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -657,6 +661,8 @@ class _HomeScreenState extends State<HomeScreen>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Ink(
+                            width: 110,
+                            height: 110,
                             padding: EdgeInsets.all(6),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -694,6 +700,8 @@ class _HomeScreenState extends State<HomeScreen>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Ink(
+                            width: 110,
+                            height: 110,
                             padding: EdgeInsets.all(6),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,

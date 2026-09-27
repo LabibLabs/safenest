@@ -429,14 +429,14 @@ class _MedicineEntryScreenState extends State<MedicineEntryScreen> {
                           reminderTimeController.length,
                               (index) {
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
+                              padding: EdgeInsets.only(bottom: 12),
                               child: _inputTextField(
                                 hint: "8:00",
                                 label: "Reminder ${index + 1}",
                                 controller: reminderTimeController[index],
                                 icon: reminderTimeController.length > 1
                                     ? IconButton(
-                                  icon: const Icon(Icons.delete_outline, color: Colors.red),
+                                  icon: Icon(Icons.delete_outline, color: Colors.red),
                                   onPressed: () {
                                     setState(() {
                                       reminderTimeController[index].dispose();

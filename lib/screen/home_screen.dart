@@ -4,8 +4,9 @@ import 'package:safenest/screen/functions/get_gender.dart';
 import 'package:safenest/screen/functions/get_step_walk.dart';
 import 'package:safenest/screen/functions/get_taken_medicine.dart';
 import 'package:safenest/screen/functions/get_user_name.dart';
-import 'package:safenest/screen/functions/get_water_galsses.dart';
+import 'package:safenest/screen/functions/get_water_glasses.dart';
 import 'package:safenest/screen/functions/greeting.dart';
+import 'package:safenest/screen/hydration_tracker.dart';
 import 'package:safenest/screen/medicine_entry_screen.dart';
 import 'package:safenest/screen/my_medicine_screen.dart';
 class HomeScreen extends StatefulWidget
@@ -438,7 +439,12 @@ class _HomeScreenState extends State<HomeScreen>
                   child:InkWell(
                     borderRadius: BorderRadius.circular(15),
                     onTap: (){
-                      debugPrint("Walter glasses button work successfully");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context)=>HydrationTracker(),
+                        )
+                      );
                     },
                     child: Ink(
                       padding: EdgeInsets.symmetric(

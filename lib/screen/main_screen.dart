@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:safenest/screen/home/home_screen.dart';
+import 'package:safenest/screen/home_screen.dart';
 import 'package:safenest/screen/my_medicine_screen.dart';
 
 class MainScreen extends StatefulWidget

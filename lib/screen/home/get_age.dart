@@ -1,3 +1,0 @@
-bool getAge(){
-  return true;
-}

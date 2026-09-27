@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:safenest/screen/home/get_age.dart';
-import 'package:safenest/screen/home/get_gender.dart';
-import 'package:safenest/screen/home/get_step_walk.dart';
-import 'package:safenest/screen/home/get_taken_medicine.dart';
-import 'package:safenest/screen/home/get_user_name.dart';
-import 'package:safenest/screen/home/get_water_galsses.dart';
-import 'package:safenest/screen/home/greeting.dart';
+import 'package:safenest/screen/functions/get_age.dart';
+import 'package:safenest/screen/functions/get_gender.dart';
+import 'package:safenest/screen/functions/get_step_walk.dart';
+import 'package:safenest/screen/functions/get_taken_medicine.dart';
+import 'package:safenest/screen/functions/get_user_name.dart';
+import 'package:safenest/screen/functions/get_water_galsses.dart';
+import 'package:safenest/screen/functions/greeting.dart';
 import 'package:safenest/screen/medicine_entry_screen.dart';
 import 'package:safenest/screen/my_medicine_screen.dart';
 class HomeScreen extends StatefulWidget

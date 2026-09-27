@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:safenest/screen/my_medicine_screen.dart';
 import 'package:safenest/screen/medicine.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'reminder_service.dart';
 
 class MedicineEntryScreen extends StatefulWidget {
   const MedicineEntryScreen({super.key});
@@ -32,6 +34,27 @@ class _MedicineEntryScreenState extends State<MedicineEntryScreen> {
 
   void addController() {
     reminderTimeController.add(TextEditingController());
+  }
+  // Adding medicineEntry details. Creating a new method
+
+  Future<void> saveMedicineData(
+      String name,
+      String strength,
+      double? quantity,
+      double? dose,
+      String? mealTiming,
+      List<String> reminderTimes,
+      ) async {
+    await FirebaseFirestore.instance.collection('medicines').add({
+      'name': name,
+      'strength': strength,
+      'quantity': quantity,
+      'dose': dose,
+      'mealTiming': mealTiming,
+      'reminderTimes': reminderTimes,
+      'createdAt': FieldValue.serverTimestamp(),
+    }
+    );
   }
 
   @override
@@ -435,7 +458,19 @@ class _MedicineEntryScreenState extends State<MedicineEntryScreen> {
                      SizedBox(
                        width: double.infinity,
                         height: 56,
-                      child: ElevatedButton(onPressed: (){
+                      child: ElevatedButton(onPressed: () async {
+
+                        await saveMedicineData(
+                          medicineName.text,
+                          medicineStrength.text,
+                          double.tryParse(medicineQuantity.text),
+                          doseValue,
+                          mealTimeValue,
+                          reminderTimeController
+                              .map((controller) => controller.text)
+                              .toList(),
+                        );
+
                         medicine.add(Medicine(
                           name: medicineName.text,
                           strength: medicineStrength.text,
@@ -447,6 +482,8 @@ class _MedicineEntryScreenState extends State<MedicineEntryScreen> {
                               .toList(),
                         ),
                         );
+
+                        if (!context.mounted) return;
 
                         Navigator.pop(
                           context,

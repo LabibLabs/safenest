@@ -5,7 +5,6 @@ class HelpCenterScreen extends StatelessWidget {
   const HelpCenterScreen({super.key});
 
 
-
   static const Color backgroundColor = Color(0xFFEDF8F2);
   static const Color brownColor = Color(0xFF6B4B40);
   static const Color cardColor = Colors.white;
@@ -28,7 +27,7 @@ class HelpCenterScreen extends StatelessWidget {
 
                 padding: const EdgeInsets.fromLTRB(
                   20,
-                  28,
+                  20,
                   20,
                   27,
                 ),
@@ -46,47 +45,6 @@ class HelpCenterScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-
-
-                    TextButton(
-                    onPressed: () {
-                        Navigator.pop(context);
-                      },
-
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-
-                          Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                            size: 22,
-                          ),
-
-                          SizedBox(width: 5),
-
-                          Text(
-                            'Back',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 8),
-
-
-
                     const Text(
                       'Help Center',
                       style: TextStyle(
@@ -97,7 +55,6 @@ class HelpCenterScreen extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 5),
-
 
 
                     const Text(
@@ -115,7 +72,6 @@ class HelpCenterScreen extends StatelessWidget {
               const SizedBox(height: 15),
 
 
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
 
@@ -125,11 +81,12 @@ class HelpCenterScreen extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder:(context)=>FeatureUnavailableScreen(),
+                                builder: (context) =>
+                                    FeatureUnavailableScreen(),
                               )
                           );
                         },
@@ -147,11 +104,12 @@ class HelpCenterScreen extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder:(context)=>FeatureUnavailableScreen(),
+                                builder: (context) =>
+                                    FeatureUnavailableScreen(),
                               )
                           );
                         },
@@ -179,11 +137,12 @@ class HelpCenterScreen extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder:(context)=>FeatureUnavailableScreen(),
+                                builder: (context) =>
+                                    FeatureUnavailableScreen(),
                               )
                           );
                         },
@@ -201,11 +160,12 @@ class HelpCenterScreen extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder:(context)=>FeatureUnavailableScreen(),
+                                builder: (context) =>
+                                    FeatureUnavailableScreen(),
                               )
                           );
                         },
@@ -222,7 +182,6 @@ class HelpCenterScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 15),
-
 
 
               Padding(
@@ -254,7 +213,6 @@ class HelpCenterScreen extends StatelessWidget {
 
                   child: Column(
                     children: [
-
 
 
                       Row(
@@ -317,7 +275,6 @@ class HelpCenterScreen extends StatelessWidget {
               const SizedBox(height: 15),
 
 
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
 
@@ -347,7 +304,6 @@ class HelpCenterScreen extends StatelessWidget {
                     children: [
 
 
-
                       const Text(
                         'About SafeNest',
                         style: TextStyle(
@@ -360,24 +316,24 @@ class HelpCenterScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
 
-
                       const Text(
-                        'Version 2.4.1 • Build 2025.07.17',
+                        'Version 2.23.24 • Build 29.09.2026',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 13,
                           color: greyText,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
 
                       const SizedBox(height: 5),
 
 
-
                       const Text(
                         'Made with ❤️ for seniors across Bangladesh',
                         style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 12,
                           color: greyText,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -390,13 +346,8 @@ class HelpCenterScreen extends StatelessWidget {
           ),
         ),
       ),
-
-
-
-      bottomNavigationBar: _bottomNavigationBar(),
     );
   }
-
 
 
   static Widget _helpOption({
@@ -427,7 +378,6 @@ class HelpCenterScreen extends StatelessWidget {
         children: [
 
 
-
           Container(
             width: 44,
             height: 44,
@@ -445,7 +395,6 @@ class HelpCenterScreen extends StatelessWidget {
           ),
 
           const SizedBox(height: 7),
-
 
 
           Text(
@@ -474,7 +423,6 @@ class HelpCenterScreen extends StatelessWidget {
         children: [
 
 
-
           SizedBox(
             width: 38,
 
@@ -496,10 +444,10 @@ class HelpCenterScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 12,
                 color: Color(0xFF555555),
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
-
 
 
           Text(
@@ -513,95 +461,6 @@ class HelpCenterScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-
-  static Widget _bottomNavigationBar() {
-    return Container(
-      height: 65,
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-
-        border: Border(
-          top: BorderSide(
-            color: Colors.grey.shade200,
-            width: 0.8,
-          ),
-        ),
-      ),
-
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-        children: [
-
-          _bottomItem(
-            icon: Icons.home,
-            label: 'Home',
-            active: true,
-          ),
-
-          _bottomItem(
-            icon: Icons.medication,
-            label: 'Medicines',
-          ),
-
-          _bottomItem(
-            icon: Icons.favorite,
-            label: 'Health',
-          ),
-
-          _bottomItem(
-            icon: Icons.smart_toy,
-            label: 'AI Friend',
-          ),
-
-          _bottomItem(
-            icon: Icons.person,
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
-  }
-
-
-
-  static Widget _bottomItem({
-    required IconData icon,
-    required String label,
-    bool active = false,
-  }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-
-      children: [
-
-        Icon(
-          icon,
-          size: 23,
-
-          color: active
-              ? const Color(0xFF65A87D)
-              : const Color(0xFF9DA9A2),
-        ),
-
-        const SizedBox(height: 4),
-
-        Text(
-          label,
-
-          style: TextStyle(
-            fontSize: 10,
-
-            color: active
-                ? const Color(0xFF65A87D)
-                : const Color(0xFF9DA9A2),
-          ),
-        ),
-      ],
     );
   }
 }

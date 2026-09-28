@@ -438,13 +438,18 @@ class _HomeScreenState extends State<HomeScreen>
                   flex: 1,
                   child:InkWell(
                     borderRadius: BorderRadius.circular(15),
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
+                    onTap: ()async {
+                      bool result=await Navigator.push(
+                          context,
+                          MaterialPageRoute(
                             builder: (context)=>HydrationTracker(),
-                        )
+                          )
                       );
+                      if(result){
+                        setState(() {
+                          
+                        });
+                      }
                     },
                     child: Ink(
                       padding: EdgeInsets.symmetric(
@@ -475,7 +480,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ],
                           ),
                           Text(
-                            getWaterGlasses(),
+                            "${getWaterGlasses()}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 23,

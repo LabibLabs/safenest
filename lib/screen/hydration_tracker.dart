@@ -11,8 +11,6 @@ class HydrationTracker extends StatefulWidget
 
 class _HydrationTracker extends State<HydrationTracker>
 {
-  double goalGlasses=8;
-  double currentGlasses=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +42,8 @@ class _HydrationTracker extends State<HydrationTracker>
                 TextButton(
                   onPressed: (){
                     Navigator.pop(
-                        context
+                      context,
+                      true,
                     );
                   },
 
@@ -160,12 +159,12 @@ class _HydrationTracker extends State<HydrationTracker>
                             currentGlasses++;
                             if(now.length<8)
                             {
-                              now.add(DateTime.now());
+                              now.add(TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute),);
                             }
                             else
                             {
                               now.removeAt(0);
-                              now.add(DateTime.now());
+                              now.add(TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute));
                             }
                           });
                         },
@@ -333,7 +332,7 @@ class _HydrationTracker extends State<HydrationTracker>
                                   ),
 
                                   Text(
-                                      "${now[index].hour}: ${now[index].minute}",
+                                      "${now[index].hour.toString().padLeft(2, '0')}: ${now[index].minute.toString().padLeft(2,"0")}",
                                   ),
                                   
                                   Spacer(),
@@ -372,4 +371,7 @@ class _HydrationTracker extends State<HydrationTracker>
   }
 }
 
-List<DateTime> now=[];
+double goalGlasses=8;
+double currentGlasses=0;
+
+List<TimeOfDay> now=[];

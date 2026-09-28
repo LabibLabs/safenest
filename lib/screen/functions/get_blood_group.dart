@@ -1,0 +1,3 @@
+String getBloodGroup(){
+  return "B+";
+}

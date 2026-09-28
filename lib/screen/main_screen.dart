@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safenest/screen/health_tracker.dart';
 import 'package:safenest/screen/home_screen.dart';
 import 'package:safenest/screen/my_medicine_screen.dart';
 
@@ -14,7 +15,7 @@ class _MainScreenState extends State<MainScreen>
   final List<Widget> _screens=[
     HomeScreen(),
     MyMedicineScreen(),
-    //HealthScreen(),
+    HealthCenter(),
     //SettingsScreen(),
   ];
   @override

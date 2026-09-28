@@ -31,21 +31,25 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
   bool checkBloodGroup = true;
 
   //add medical details.Creating a new method
-  Future<void> saveMedicalData(String height,
+
+  Future<void> saveMedicalData(
+      String height,
       String weight,
       String bloodGroup,
       String allergies,
       String chronicConditions,
       String? phone,) async {
-    await FirebaseFirestore.instance.collection('users').add({
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(phone)
+        .set({
       'height': height,
       'weight': weight,
       'bloodGroup': bloodGroup,
       'allergies': allergies,
       'chronicConditions': chronicConditions,
-      'phone': phone,
-      'createdAt': FieldValue.serverTimestamp(),}
-    );
+    }, SetOptions(merge: true));
   }
 
   @override
@@ -255,7 +259,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
                           child: TextFormField(
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return "Enter your Height";
+                                return "Enter your Weight";
                               }
                               return null;
                             },

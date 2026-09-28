@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:safenest/screen/medicine.dart';
 import 'package:safenest/screen/medicine_entry_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class MyMedicineScreen extends StatefulWidget
-{
-  const MyMedicineScreen({super.key});
+class MyMedicineScreen extends StatefulWidget {
+  final String userPhone;
+
+  const MyMedicineScreen({
+    required this.userPhone,
+    super.key,
+  });
 
   @override
-  State<MyMedicineScreen> createState()=> _MyMedicineStateScreen();
+  State<MyMedicineScreen> createState() => _MyMedicineStateScreen();
 }
-class _MyMedicineStateScreen extends State<MyMedicineScreen>
-{
 
-  Widget _medicineCard ({
+class _MyMedicineStateScreen extends State<MyMedicineScreen> {
+
+  Widget _medicineCard({
     required String? name,
     required String? strength,
     required double? quantity,
     required String? mealTiming,
     required int? reminderQuantity,
     required int index,
-  })
-  {
+  }) {
     return GestureDetector(
 
-      onLongPress: (){
+      onLongPress: () {
         showDialog(
             context: context,
             builder: ((context) {
@@ -37,16 +41,16 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
                 actions: [
 
                   TextButton(
-                      onPressed:(){
+                      onPressed: () {
                         Navigator.pop(context);
                       },
-                      child:Text(
+                      child: Text(
                         "Cancel",
                       )
                   ),
 
                   TextButton(
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           medicine.removeAt(index);
                           Navigator.pop(context);
@@ -67,7 +71,7 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
       },
 
       child: Padding(
-        padding:EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: 8,
           vertical: 5,
         ),
@@ -76,7 +80,7 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding:EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 child: Container(
                   width: 70,
                   height: 70,
@@ -91,6 +95,7 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
                   ),
                 ),
               ),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -107,8 +112,8 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        reminderQuantity==0?
-                        "Not daily ":
+                        reminderQuantity == 0 ?
+                        "Not daily " :
                         reminderQuantity == 1
                             ? "once daily "
                             : reminderQuantity == 2
@@ -151,10 +156,10 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: (quantity ?? 0)>=15?
-                      Colors.green:
-                      (quantity ?? 0)>=6?
-                      Colors.orange:
+                      color: (quantity ?? 0) >= 15 ?
+                      Colors.green :
+                      (quantity ?? 0) >= 6 ?
+                      Colors.orange :
                       Colors.red,
                     ),
                   ),
@@ -173,6 +178,7 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
                   )
                 ],
               ),
+
               SizedBox(
                 width: 10,
               )
@@ -183,6 +189,44 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
     );
   }
 
+
+  // For Firestore medicines sorting
+  Future<void> getMedicineData() async {
+
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userPhone)
+        .collection('medicines')
+        .orderBy('createdAt', descending: true)
+        .get();
+
+    medicine.clear();
+
+    for (var doc in snapshot.docs) {
+      medicine.add(
+        Medicine(
+          name: doc['name'],
+          strength: doc['strength'],
+          quantity: (doc['quantity'] as num?)?.toDouble(),
+          dose: (doc['dose'] as num?)?.toDouble(),
+          mealTiming: doc['mealTiming'],
+          reminderTime: List<String>.from(doc['reminderTimes']),
+        ),
+      );
+    }
+
+    setState(() {});
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    getMedicineData();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,6 +235,7 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
           SizedBox(
             height: 52,
           ),
+
           Container(
             width: double.infinity,
             height: 150,
@@ -201,6 +246,7 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
               children: [
 
                 SizedBox(height: 17),
+
                 Text(
                   "My Medicine",
                   style: TextStyle(
@@ -214,52 +260,60 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
                   mainAxisAlignment: MainAxisAlignment.start,
 
                   children: [
-                   Text(
-                     "${medicine.length} Medicines",
-                     style: TextStyle(
-                       fontWeight: FontWeight.w600,
-                       fontSize: 17,
-                       color: Colors.white,
-                     ),
-                   )
+                    Text(
+                      "${medicine.length} Medicines",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 17,
+                        color: Colors.white,
+                      ),
+                    )
                   ],
                 ),
               ],
             ),
           ),
+
           Expanded(
-              child:ListView.builder(
-                itemCount: medicine.length,
-                padding: EdgeInsets.zero,
-                itemBuilder: (context,index){
-                  return _medicineCard(
-                    name: medicine[index].name,
-                    strength: medicine[index].strength,
-                    quantity: medicine[index].quantity,
-                    mealTiming: medicine[index].mealTiming,
-                    reminderQuantity: medicine[index].reminderTime?.length ?? 0,
-                    index: index,
-                  );
-                }
+              child: ListView.builder(
+                  itemCount: medicine.length,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    return _medicineCard(
+                      name: medicine[index].name,
+                      strength: medicine[index].strength,
+                      quantity: medicine[index].quantity,
+                      mealTiming: medicine[index].mealTiming,
+                      reminderQuantity: medicine[index].reminderTime?.length ??
+                          0,
+                      index: index,
+                    );
+                  }
               )
           )
         ],
       ),
+
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
 
           bool result = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MedicineEntryScreen(),
+              builder: (context) =>
+                  MedicineEntryScreen(
+                    userPhone: widget.userPhone,
+                  ),
             ),
           );
 
           if (result == true) {
-            setState(() {});
+            await getMedicineData();
           }
         },
+
         backgroundColor: Colors.green,
+
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -271,17 +325,17 @@ class _MyMedicineStateScreen extends State<MyMedicineScreen>
           color: Colors.white,
         ),
 
-          label: Text(
-            "Add Medicine",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+        label: Text(
+          "Add Medicine",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
+        ),
       ),
     );
   }
 }
-List<Medicine> medicine=[];
 
+List<Medicine> medicine = [];

@@ -34,17 +34,16 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
   }
 
 // Add emergency contact details. Creating a new method
-  Future<void> saveEmergencyContact(String contactName,
+  Future<void> saveEmergencyContact(
+      String contactName,
       String relationship,
       String emergencyPhone,
       String? phone,) async {
-    await FirebaseFirestore.instance.collection('users').add({
+    await FirebaseFirestore.instance.collection('users').doc(phone).set({
       'contactName': contactName,
       'relationship': relationship,
       'emergencyPhone': emergencyPhone,
-      'phone': phone,
-      'createdAt': FieldValue.serverTimestamp(),
-    });
+    }, SetOptions(merge: true));
   }
 
   @override

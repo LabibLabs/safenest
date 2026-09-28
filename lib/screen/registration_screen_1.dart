@@ -58,12 +58,9 @@ class _Registration1State extends State<RegistrationScreen1> {
 
 //add user details.Creating a new method
 
-  Future<void> saveUserData(String name,
-      String dateOfBirth,
-      String gender,
-      String phone,
-      String address,) async {
-    await FirebaseFirestore.instance.collection('users').add({
+  Future<void> saveUserData(String name, String dateOfBirth, String gender,
+      String phone, String address,) async {
+    await FirebaseFirestore.instance.collection('users').doc(phone).set({
       'name': name,
       'dateOfBirth': dateOfBirth,
       'gender': gender,
@@ -185,7 +182,8 @@ class _Registration1State extends State<RegistrationScreen1> {
                           SizedBox(width: 25),
                           Text(
                             "Full Name *",
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 17),
                           ),
                         ],
                       ),
@@ -197,11 +195,16 @@ class _Registration1State extends State<RegistrationScreen1> {
                           Expanded(
                             child: TextFormField(
                               controller: nameController,
-                              validator: (value) => (value == null || value.isEmpty) ? "Enter your full name" : null,
+                              validator: (value) =>
+                              (value == null || value.isEmpty)
+                                  ? "Enter your full name"
+                                  : null,
                               decoration: InputDecoration(
                                 hintText: "Enter your full name",
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(13)),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 13),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(13)),
                               ),
                             ),
                           ),
@@ -216,7 +219,8 @@ class _Registration1State extends State<RegistrationScreen1> {
                           SizedBox(width: 25),
                           Text(
                             "Date of Birth *",
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 17),
                           ),
                         ],
                       ),
@@ -230,12 +234,19 @@ class _Registration1State extends State<RegistrationScreen1> {
                               controller: dobController,
                               readOnly: true,
                               onTap: selectDate,
-                              validator: (value) => (value == null || value.isEmpty) ? "Select date of birth" : null,
+                              validator: (value) =>
+                              (value == null || value.isEmpty)
+                                  ? "Select date of birth"
+                                  : null,
                               decoration: InputDecoration(
                                 hintText: "MM/DD/YYYY",
-                                suffixIcon: const Icon(Icons.calendar_today, color: Colors.grey, size: 20),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(13)),
+                                suffixIcon: const Icon(
+                                    Icons.calendar_today, color: Colors.grey,
+                                    size: 20),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 13),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(13)),
                               ),
                             ),
                           ),
@@ -250,7 +261,8 @@ class _Registration1State extends State<RegistrationScreen1> {
                           const SizedBox(width: 25),
                           const Text(
                             "Gender *",
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 18),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
@@ -286,7 +298,8 @@ class _Registration1State extends State<RegistrationScreen1> {
                           SizedBox(width: 25),
                           Text(
                             "Phone Number *",
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 17),
                           ),
                         ],
                       ),
@@ -300,12 +313,17 @@ class _Registration1State extends State<RegistrationScreen1> {
                               controller: phoneController,
                               keyboardType: TextInputType.phone,
                               maxLength: 11,
-                              validator: (value) => (value == null || value.isEmpty) ? "Enter your phone number" : null,
+                              validator: (value) =>
+                              (value == null || value.isEmpty)
+                                  ? "Enter your phone number"
+                                  : null,
                               decoration: InputDecoration(
                                 hintText: "01XXXXXXXXX",
                                 counterText: "",
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(13)),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 13),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(13)),
                               ),
                             ),
                           ),
@@ -320,7 +338,8 @@ class _Registration1State extends State<RegistrationScreen1> {
                           SizedBox(width: 25),
                           Text(
                             "Address (Optional)",
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 17),
                           ),
                         ],
                       ),
@@ -334,8 +353,10 @@ class _Registration1State extends State<RegistrationScreen1> {
                               controller: addressController,
                               decoration: InputDecoration(
                                 hintText: "Enter your address",
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(13)),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 13),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(13)),
                               ),
                             ),
                           ),
@@ -357,8 +378,9 @@ class _Registration1State extends State<RegistrationScreen1> {
                     flex: 1,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context,
-                            MaterialPageRoute(builder: (context)=>WelcomeScreen()
+                        Navigator.push(context,
+                            MaterialPageRoute(
+                              builder: (context) => WelcomeScreen()
                               ,)
                         );
                       },
@@ -397,24 +419,18 @@ class _Registration1State extends State<RegistrationScreen1> {
                         dateOfBirth = dobController.text;
                         phoneNumber = "+88${phoneController.text}";
                         address = addressController.text;
-
                         await saveUserData(
                           name,
                           dateOfBirth,
                           gender,
                           phoneNumber,
-                          address,
-                        );
-
+                          address,);
                         if (!context.mounted) return;
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegistrationScreen2(
-                              phone: phoneNumber,
-                            ),
-                          ),
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) =>
+                              RegistrationScreen2(phone: phoneNumber,
+                              ),
+                        ),
                         );
                       }
                     },

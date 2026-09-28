@@ -7,11 +7,13 @@ import 'package:safenest/screen/main_screen.dart';
 class OTPScreen extends StatefulWidget {
   final String? phone;
   final String verificationId;
+
   OTPScreen({
     required this.phone,
     required this.verificationId,
     super.key,
   });
+
   @override
   State<OTPScreen> createState() => _OTPScreenState();
 }
@@ -23,17 +25,21 @@ class _OTPScreenState extends State<OTPScreen> {
   TextEditingController otp4 = TextEditingController();
   TextEditingController otp5 = TextEditingController();
   TextEditingController otp6 = TextEditingController();
+
   FocusNode focus1 = FocusNode();
   FocusNode focus2 = FocusNode();
   FocusNode focus3 = FocusNode();
   FocusNode focus4 = FocusNode();
   FocusNode focus5 = FocusNode();
   FocusNode focus6 = FocusNode();
+
   final formKey = GlobalKey<FormState>();
+
   bool otpFill = true;
   bool resentAppear = false;
   bool clickIcon = false;
-  String otp='';
+
+  String otp = '';
 
   @override
   void dispose() {
@@ -43,12 +49,14 @@ class _OTPScreenState extends State<OTPScreen> {
     otp4.dispose();
     otp5.dispose();
     otp6.dispose();
+
     focus1.dispose();
     focus2.dispose();
     focus3.dispose();
     focus4.dispose();
     focus5.dispose();
     focus6.dispose();
+
     super.dispose();
   }
 
@@ -76,25 +84,33 @@ class _OTPScreenState extends State<OTPScreen> {
                   stops: [0.3, 1],
                 ),
               ),
+
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 18),
+
                   TextButton.icon(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     icon: Icon(Icons.arrow_back, size: 22),
-                    label: Text("Back", style: TextStyle(fontSize: 18)),
+                    label: Text(
+                      "Back",
+                      style: TextStyle(fontSize: 18),
+                    ),
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
                       alignment: Alignment.topLeft,
                       padding: EdgeInsets.zero,
                       minimumSize: Size.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      tapTargetSize:
+                      MaterialTapTargetSize.shrinkWrap,
                     ),
                   ),
+
                   SizedBox(height: 6),
+
                   Text(
                     "Verify OTP",
                     style: TextStyle(
@@ -103,6 +119,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       fontSize: 25,
                     ),
                   ),
+
                   Text(
                     "Sent to ${widget.phone}",
                     style: TextStyle(
@@ -114,57 +131,83 @@ class _OTPScreenState extends State<OTPScreen> {
                 ],
               ),
             ),
+
             SizedBox(height: 60),
+
             Text(
               "Enter the 6-digit code",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
+
             SizedBox(height: 25),
+
             Form(
               key: formKey,
+
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment:
+                MainAxisAlignment.spaceEvenly,
+
                 children: [
                   SizedBox(width: 20),
 
                   //OTP 1 text form field
                   Expanded(
                     flex: 1,
+
                     child: TextFormField(
                       controller: otp1,
                       focusNode: focus1,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
+
                       onChanged: (value) {
-                        if (value.isNotEmpty && int.tryParse(value) != null) {
-                          FocusScope.of(context).requestFocus(focus2);
+                        if (value.isNotEmpty &&
+                            int.tryParse(value) != null) {
+                          FocusScope.of(context)
+                              .requestFocus(focus2);
                         }
-                        if (int.tryParse(value) == null && value.isNotEmpty) {
+
+                        if (int.tryParse(value) == null &&
+                            value.isNotEmpty) {
                           otp1.clear();
                         } else if (value.isEmpty) {
-                          FocusScope.of(context).requestFocus(focus1);
+                          FocusScope.of(context)
+                              .requestFocus(focus1);
                         }
+
                         setState(() {});
                       },
+
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "";
                         }
                         return null;
                       },
+
                       style: TextStyle(
                         color: otp1.text.isNotEmpty
                             ? Colors.white
                             : Colors.black,
                       ),
+
                       textAlign: TextAlign.center,
+
                       decoration: InputDecoration(
                         hintText: "0",
                         counterText: "",
+
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                          BorderRadius.circular(10),
                         ),
+
                         filled: true,
+
                         fillColor: otp1.text.isNotEmpty
                             ? Colors.green[400]
                             : Colors.grey[350],
@@ -177,43 +220,59 @@ class _OTPScreenState extends State<OTPScreen> {
                   //OTP 2 text form field
                   Expanded(
                     flex: 1,
+
                     child: TextFormField(
                       controller: otp2,
                       focusNode: focus2,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
+
                       onChanged: (value) {
-                        if (value.isNotEmpty && int.tryParse(value) != null) {
-                          FocusScope.of(context).requestFocus(focus3);
+                        if (value.isNotEmpty &&
+                            int.tryParse(value) != null) {
+                          FocusScope.of(context)
+                              .requestFocus(focus3);
                         }
-                        if (int.tryParse(value) == null && value.isNotEmpty) {
+
+                        if (int.tryParse(value) == null &&
+                            value.isNotEmpty) {
                           otp2.clear();
                         } else if (value.isEmpty) {
-                          FocusScope.of(context).requestFocus(focus1);
+                          FocusScope.of(context)
+                              .requestFocus(focus1);
                         }
+
                         setState(() {});
                       },
+
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "";
                         }
                         return null;
                       },
+
                       style: TextStyle(
                         color: otp2.text.isNotEmpty
                             ? Colors.white
                             : Colors.black,
                       ),
+
                       textAlign: TextAlign.center,
+
                       decoration: InputDecoration(
                         filled: true,
+
                         fillColor: otp2.text.isNotEmpty
                             ? Colors.green[400]
                             : Colors.grey[350],
+
                         hintText: "0",
                         counterText: "",
+
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                          BorderRadius.circular(10),
                         ),
                       ),
                     ),
@@ -224,43 +283,58 @@ class _OTPScreenState extends State<OTPScreen> {
                   //OTP 3 text form field
                   Expanded(
                     flex: 1,
+
                     child: TextFormField(
                       controller: otp3,
                       focusNode: focus3,
                       maxLength: 1,
                       keyboardType: TextInputType.number,
+
                       onChanged: (value) {
-                        if (value.isNotEmpty && int.tryParse(value) != null) {
-                          FocusScope.of(context).requestFocus(focus4);
+                        if (value.isNotEmpty &&
+                            int.tryParse(value) != null) {
+                          FocusScope.of(context)
+                              .requestFocus(focus4);
                         }
-                        if (int.tryParse(value) == null && value.isNotEmpty) {
+
+                        if (int.tryParse(value) == null &&
+                            value.isNotEmpty) {
                           otp3.clear();
                         } else if (value.isEmpty) {
-                          FocusScope.of(context).requestFocus(focus2);
+                          FocusScope.of(context)
+                              .requestFocus(focus2);
                         }
+
                         setState(() {});
                       },
+
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "";
                         }
                         return null;
                       },
+
                       style: TextStyle(
                         color: otp3.text.isNotEmpty
                             ? Colors.white
                             : Colors.black,
                       ),
+
                       textAlign: TextAlign.center,
+
                       decoration: InputDecoration(
                         hintText: "0",
                         counterText: "",
                         filled: true,
+
                         fillColor: otp3.text.isNotEmpty
                             ? Colors.green[400]
                             : Colors.grey[350],
+
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                          BorderRadius.circular(10),
                         ),
                       ),
                     ),
@@ -271,43 +345,58 @@ class _OTPScreenState extends State<OTPScreen> {
                   //OTP 4 text form field
                   Expanded(
                     flex: 1,
+
                     child: TextFormField(
                       controller: otp4,
                       focusNode: focus4,
                       maxLines: 1,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
+
                       onChanged: (value) {
-                        if (value.isNotEmpty && int.tryParse(value) != null) {
-                          FocusScope.of(context).requestFocus(focus5);
+                        if (value.isNotEmpty &&
+                            int.tryParse(value) != null) {
+                          FocusScope.of(context)
+                              .requestFocus(focus5);
                         }
-                        if (int.tryParse(value) == null && value.isNotEmpty) {
+
+                        if (int.tryParse(value) == null &&
+                            value.isNotEmpty) {
                           otp4.clear();
                         } else if (value.isEmpty) {
-                          FocusScope.of(context).requestFocus(focus3);
+                          FocusScope.of(context)
+                              .requestFocus(focus3);
                         }
+
                         setState(() {});
                       },
+
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "";
                         }
                         return null;
                       },
+
                       style: TextStyle(
                         color: otp4.text.isNotEmpty
                             ? Colors.white
                             : Colors.black,
                       ),
+
                       decoration: InputDecoration(
                         filled: true,
+
                         fillColor: otp4.text.isNotEmpty
                             ? Colors.green[400]
                             : Colors.grey[350],
+
                         counterText: "",
                         hintText: "0",
+
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                          BorderRadius.circular(10),
                         ),
                       ),
                     ),
@@ -318,43 +407,58 @@ class _OTPScreenState extends State<OTPScreen> {
                   //OTP 5 text form field
                   Expanded(
                     flex: 1,
+
                     child: TextFormField(
                       controller: otp5,
                       focusNode: focus5,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
+
                       onChanged: (value) {
-                        if (value.isNotEmpty && int.tryParse(value) != null) {
-                          FocusScope.of(context).requestFocus(focus6);
+                        if (value.isNotEmpty &&
+                            int.tryParse(value) != null) {
+                          FocusScope.of(context)
+                              .requestFocus(focus6);
                         }
-                        if (int.tryParse(value) == null && value.isNotEmpty) {
+
+                        if (int.tryParse(value) == null &&
+                            value.isNotEmpty) {
                           otp5.clear();
                         } else if (value.isEmpty) {
-                          FocusScope.of(context).requestFocus(focus4);
+                          FocusScope.of(context)
+                              .requestFocus(focus4);
                         }
+
                         setState(() {});
                       },
+
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "";
                         }
                         return null;
                       },
+
                       style: TextStyle(
                         color: otp5.text.isNotEmpty
                             ? Colors.white
                             : Colors.black,
                       ),
+
                       textAlign: TextAlign.center,
+
                       decoration: InputDecoration(
                         hintText: "0",
                         counterText: "",
                         filled: true,
+
                         fillColor: otp5.text.isNotEmpty
                             ? Colors.green[400]
                             : Colors.grey[350],
+
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                          BorderRadius.circular(10),
                         ),
                       ),
                     ),
@@ -365,57 +469,78 @@ class _OTPScreenState extends State<OTPScreen> {
                   //OTP 6 text form field
                   Expanded(
                     flex: 1,
+
                     child: TextFormField(
                       controller: otp6,
                       focusNode: focus6,
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       maxLength: 1,
+
                       onChanged: (value) {
-                        if (value.isNotEmpty && int.tryParse(value) != null) {}
-                        if (int.tryParse(value) == null && value.isNotEmpty) {
+                        if (value.isNotEmpty &&
+                            int.tryParse(value) != null) {}
+
+                        if (int.tryParse(value) == null &&
+                            value.isNotEmpty) {
                           otp6.clear();
                         } else if (value.isEmpty) {
-                          FocusScope.of(context).requestFocus(focus5);
+                          FocusScope.of(context)
+                              .requestFocus(focus5);
                         }
+
                         setState(() {});
                       },
+
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "";
                         }
                         return null;
                       },
+
                       style: TextStyle(
                         color: otp6.text.isNotEmpty
                             ? Colors.white
                             : Colors.black,
                       ),
+
                       decoration: InputDecoration(
                         hintText: "0",
                         counterText: "",
                         filled: true,
+
                         fillColor: otp6.text.isNotEmpty
                             ? Colors.green[400]
                             : Colors.grey[350],
+
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                          BorderRadius.circular(10),
                         ),
                       ),
                     ),
                   ),
+
                   SizedBox(width: 20),
                 ],
               ),
             ),
+
             SizedBox(height: 8),
+
             Text(
               "Enter OTP",
-              style: TextStyle(color: otpFill ? Colors.white : Colors.red),
+              style: TextStyle(
+                color: otpFill ? Colors.white : Colors.red,
+              ),
             ),
+
             SizedBox(height: 15),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
+
               children: [
                 Icon(
                   clickIcon ? Icons.check : null,
@@ -423,58 +548,75 @@ class _OTPScreenState extends State<OTPScreen> {
                   size: 30,
                   fontWeight: FontWeight.bold,
                 ),
+
                 TextButton(
                   onPressed: resentAppear
                       ? () {
-                          if (otp1.text.isNotEmpty &&
-                              otp2.text.isNotEmpty &&
-                              otp3.text.isNotEmpty &&
-                              otp4.text.isNotEmpty &&
-                              otp5.text.isNotEmpty &&
-                              otp6.text.isNotEmpty) {
-                            resentAppear = false;
+                    if (otp1.text.isNotEmpty &&
+                        otp2.text.isNotEmpty &&
+                        otp3.text.isNotEmpty &&
+                        otp4.text.isNotEmpty &&
+                        otp5.text.isNotEmpty &&
+                        otp6.text.isNotEmpty) {
+                      resentAppear = false;
 
-                            Future.delayed(Duration(seconds: 30), () {
-                              setState(() {
-                                if (otp1.text.isNotEmpty ||
-                                    otp2.text.isNotEmpty ||
-                                    otp3.text.isNotEmpty ||
-                                    otp4.text.isNotEmpty ||
-                                    otp5.text.isNotEmpty ||
-                                    otp6.text.isNotEmpty) {
-                                  resentAppear = true;
-                                }
-                              });
-                            });
-                            otp1.clear();
-                            otp2.clear();
-                            otp3.clear();
-                            otp4.clear();
-                            otp5.clear();
-                            otp6.clear();
-                            FocusScope.of(context).requestFocus(focus1);
-                          } else {
-                            resentAppear = false;
-                          }
-                          setState(() {});
-                        }
+                      Future.delayed(
+                        Duration(seconds: 30),
+                            () {
+                          setState(() {
+                            if (otp1.text.isNotEmpty ||
+                                otp2.text.isNotEmpty ||
+                                otp3.text.isNotEmpty ||
+                                otp4.text.isNotEmpty ||
+                                otp5.text.isNotEmpty ||
+                                otp6.text.isNotEmpty) {
+                              resentAppear = true;
+                            }
+                          });
+                        },
+                      );
+
+                      otp1.clear();
+                      otp2.clear();
+                      otp3.clear();
+                      otp4.clear();
+                      otp5.clear();
+                      otp6.clear();
+
+                      FocusScope.of(context)
+                          .requestFocus(focus1);
+                    } else {
+                      resentAppear = false;
+                    }
+
+                    setState(() {});
+                  }
                       : null,
+
                   child: Text(
                     "Resend OTP in 30 seconds",
+
                     style: TextStyle(
-                      color: resentAppear ? Colors.black : Colors.grey,
+                      color: resentAppear
+                          ? Colors.black
+                          : Colors.grey,
+
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ],
             ),
+
             SizedBox(height: 15),
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
+
               child: ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {}
+
                   setState(() {
                     if (otp1.text.isNotEmpty &&
                         otp2.text.isNotEmpty &&
@@ -484,48 +626,68 @@ class _OTPScreenState extends State<OTPScreen> {
                         otp6.text.isNotEmpty) {
                       otp =
                           otp1.text +
-                          otp2.text +
-                          otp3.text +
-                          otp4.text +
-                          otp5.text +
-                          otp6.text;
+                              otp2.text +
+                              otp3.text +
+                              otp4.text +
+                              otp5.text +
+                              otp6.text;
+
                       otpFill = true;
                       clickIcon = true;
+
                       () async {
                         try {
                           PhoneAuthCredential credential =
-                               PhoneAuthProvider.credential(
-                                verificationId: widget.verificationId,
-                                smsCode: otp,
-                              );
-                          FirebaseAuth.instance.signInWithCredential(credential).then((value){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => MainScreen())));
+                          PhoneAuthProvider.credential(
+                            verificationId:
+                            widget.verificationId,
+                            smsCode: otp,
+                          );
+
+                          FirebaseAuth.instance
+                              .signInWithCredential(credential)
+                              .then((value) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainScreen(
+                                  userPhone: widget.phone!,
+                                ),
+                              ),
+                            );
                           });
                         } catch (error) {
                           log(error.toString());
                         }
                       }();
 
-                      Future.delayed(Duration(seconds: 30), () {
-                        setState(() {
-                          resentAppear = true;
-                        });
-                      });
+                      Future.delayed(
+                        Duration(seconds: 30),
+                            () {
+                          setState(() {
+                            resentAppear = true;
+                          });
+                        },
+                      );
                     } else {
                       otpFill = false;
                       resentAppear = false;
                     }
                   });
                 },
+
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 60),
                   backgroundColor: Colors.green,
+
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
+
                 child: Text(
                   "Verify & Continue",
+
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 20,

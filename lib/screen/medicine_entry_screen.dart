@@ -5,12 +5,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'reminder_service.dart';
 
 class MedicineEntryScreen extends StatefulWidget {
-  const MedicineEntryScreen({super.key});
+  final String userPhone;
+
+  const MedicineEntryScreen({
+    required this.userPhone,
+    super.key,
+  });
 
   @override
   State<MedicineEntryScreen> createState() => _MedicineEntryScreenState();
 }
-
 class _MedicineEntryScreenState extends State<MedicineEntryScreen> {
   TextEditingController medicineName = new TextEditingController();
   TextEditingController medicineStrength = new TextEditingController();
@@ -44,8 +48,14 @@ class _MedicineEntryScreenState extends State<MedicineEntryScreen> {
       double? dose,
       String? mealTiming,
       List<String> reminderTimes,
+      String? phone,
+
       ) async {
-    await FirebaseFirestore.instance.collection('medicines').add({
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(phone)
+        .collection('medicines')
+        .add({
       'name': name,
       'strength': strength,
       'quantity': quantity,
@@ -53,8 +63,7 @@ class _MedicineEntryScreenState extends State<MedicineEntryScreen> {
       'mealTiming': mealTiming,
       'reminderTimes': reminderTimes,
       'createdAt': FieldValue.serverTimestamp(),
-    }
-    );
+    });
   }
 
   @override
@@ -469,6 +478,7 @@ class _MedicineEntryScreenState extends State<MedicineEntryScreen> {
                           reminderTimeController
                               .map((controller) => controller.text)
                               .toList(),
+                          widget.userPhone,
                         );
 
                         medicine.add(Medicine(

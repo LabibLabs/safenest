@@ -1,3 +1,3 @@
-bool getAge() {
-  return true;
+int getAge() {
+  return 21;
 }

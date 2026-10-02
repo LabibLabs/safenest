@@ -1,0 +1,14 @@
+[33mcommit b00d602e55f94942c897fc353b9b6c50e77a2a9b[m
+Author: Labib Mamun <labibmamun05@gmail.com>
+Date:   Tue Sep 29 03:34:10 2026 +0600
+
+    add profile screen and get phone number and set username function. Version 2.18.16
+
+ lib/main.dart                              |   4 [32m+[m
+ lib/screen/functions/get_age.dart          |   4 [32m+[m[31m-[m
+ lib/screen/functions/get_phone_number.dart |   4 [32m+[m
+ lib/screen/functions/set_user_name.dart    |   3 [32m+[m
+ lib/screen/health_tracker_history.dart     |   6 [32m+[m[31m-[m
+ lib/screen/home_screen.dart                |  18 [32m+[m[31m-[m
+ lib/screen/profile_screen.dart             | 282 [32m+++++++++++++++++++++++++++++[m
+ 7 files changed, 312 insertions(+), 9 deletions(-)

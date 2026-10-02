@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safenest/screen/doctor_reminder.dart';
 import 'package:safenest/screen/functions/get_age.dart';
 import 'package:safenest/screen/functions/get_gender.dart';
 import 'package:safenest/screen/functions/get_step_walk.dart';
@@ -9,88 +10,68 @@ import 'package:safenest/screen/functions/greeting.dart';
 import 'package:safenest/screen/hydration_tracker.dart';
 import 'package:safenest/screen/medicine_entry_screen.dart';
 import 'package:safenest/screen/my_medicine_screen.dart';
+import 'package:safenest/screen/profile_screen.dart';
+import 'package:safenest/screen/refill_reminders.dart';
+import 'package:safenest/screen/step_count.dart';
+import 'package:safenest/screen/medicine_taken_screen.dart';
 
-class HomeScreen extends StatefulWidget
-{
+class HomeScreen extends StatefulWidget {
   final String userPhone;
 
-  const HomeScreen({
-    required this.userPhone,
-    super.key,
-  });
+  const HomeScreen({required this.userPhone, super.key});
 
   @override
-  State<HomeScreen> createState()=>_HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-{
-
-  Widget _medicineCard ({
+class _HomeScreenState extends State<HomeScreen> {
+  Widget _medicineCard({
     required String? name,
     required String? strength,
     required double? quantity,
     required String? mealTiming,
     required int? reminderQuantity,
     required int index,
-  })
-  {
+  }) {
     return GestureDetector(
-
-      onLongPress: (){
+      onLongPress: () {
         showDialog(
-            context: context,
-            builder: ((context) {
-              return AlertDialog(
-                title: Text(
-                    "Delete medicine"
+          context: context,
+          builder: ((context) {
+            return AlertDialog(
+              title: Text("Delete medicine"),
+              content: Text("Are you sure you want to delete this medicine?"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancel"),
                 ),
-                content: Text(
-                  "Are you sure you want to delete this medicine?",
+
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      medicine.removeAt(index);
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: Text("Delete", style: TextStyle(color: Colors.red)),
                 ),
-                actions: [
-
-                  TextButton(
-                      onPressed:(){
-                        Navigator.pop(context);
-                      },
-                      child:Text(
-                        "Cancel",
-                      )
-                  ),
-
-                  TextButton(
-                      onPressed: (){
-                        setState(() {
-                          medicine.removeAt(index);
-                          Navigator.pop(context);
-                        });
-                      },
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(
-                          color: Colors.red,
-                        ),
-                      )
-                  ),
-                ],
-              );
-            }
-            )
+              ],
+            );
+          }),
         );
       },
 
       child: Padding(
-        padding:EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 5,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         child: Card(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding:EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 child: Container(
                   width: 70,
                   height: 70,
@@ -122,9 +103,9 @@ class _HomeScreenState extends State<HomeScreen>
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        reminderQuantity==0?
-                        "Not daily ":
-                        reminderQuantity == 1
+                        reminderQuantity == 0
+                            ? "Not daily "
+                            : reminderQuantity == 1
                             ? "once daily "
                             : reminderQuantity == 2
                             ? "Twice daily "
@@ -152,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
 
@@ -166,17 +147,15 @@ class _HomeScreenState extends State<HomeScreen>
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: (quantity ?? 0)>=15?
-                      Colors.green:
-                      (quantity ?? 0)>=6?
-                      Colors.orange:
-                      Colors.red,
+                      color: (quantity ?? 0) >= 15
+                          ? Colors.green
+                          : (quantity ?? 0) >= 6
+                          ? Colors.orange
+                          : Colors.red,
                     ),
                   ),
 
-                  SizedBox(
-                    height: 6,
-                  ),
+                  SizedBox(height: 6),
 
                   Text(
                     "tabs left",
@@ -185,13 +164,11 @@ class _HomeScreenState extends State<HomeScreen>
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
-                  )
+                  ),
                 ],
               ),
 
-              SizedBox(
-                width: 10,
-              )
+              SizedBox(width: 10),
             ],
           ),
         ),
@@ -200,39 +177,29 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F2F5),
 
       body: ListView(
-        padding: EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 40,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 40),
 
         children: [
-
           Row(
             children: [
-
               Image.asset(
                 "assets/images/safenest_logo.png",
-                width:70,
-                height:70,
+                width: 70,
+                height: 70,
               ),
 
-              SizedBox(
-                width: 5,
-              ),
+              SizedBox(width: 5),
 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Row(
                     children: [
-
                       Text(
                         "Safe",
                         style: TextStyle(
@@ -255,11 +222,10 @@ class _HomeScreenState extends State<HomeScreen>
 
                   Row(
                     children: [
-
                       Text(
                         "Care ",
                         style: TextStyle(
-                          fontSize:15,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -300,76 +266,53 @@ class _HomeScreenState extends State<HomeScreen>
 
               Spacer(),
 
-              IconButton(
-                  onPressed:(){
-
-                  },
-                  icon: Icon(
-                    Icons.notifications_none_outlined,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w600,
-                    size: 30,
-                  )
-              ),
-
               GestureDetector(
-                onTap: (){
-                  debugPrint("Profile button working successfully");
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
                 },
 
-                child: getGender()?
-                (
-                    getAge()?
-                    Image.asset(
-                      "assets/images/male_logo_1.png",
-                      width: 50,
-                    ):
-                    Image.asset(
-                      "assets/images/male_logo_2.png",
-                      width: 50,
-                    )
-                ):
-                (
-                    getAge()?
-                    Image.asset(
-                      "assets/images/female_logo_1.png",
-                      width: 50,
-                    ):
-                    Image.asset(
-                      "assets/images/female_logo_2.png",
-                      width: 50,
-                    )
-                ),
+                child: getGender()
+                    ? (getAge() < 55
+                          ? Image.asset(
+                              "assets/images/male_logo_1.png",
+                              width: 50,
+                            )
+                          : Image.asset(
+                              "assets/images/male_logo_2.png",
+                              width: 50,
+                            ))
+                    : (getAge() < 55
+                          ? Image.asset(
+                              "assets/images/female_logo_1.png",
+                              width: 50,
+                            )
+                          : Image.asset(
+                              "assets/images/female_logo_2.png",
+                              width: 50,
+                            )),
               ),
             ],
           ),
 
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
 
           Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 15,
-              horizontal: 10,
-            ),
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
 
             decoration: BoxDecoration(
-                color: Color(0xFFEAF7F0),
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  width: 3,
-                  color: Color(0xFFD4EFE0),
-                )
+              color: Color(0xFFEAF7F0),
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(width: 3, color: Color(0xFFD4EFE0)),
             ),
 
             child: Row(
               children: [
-
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Text(
                       getGreeting(),
                       style: TextStyle(
@@ -394,129 +337,34 @@ class _HomeScreenState extends State<HomeScreen>
                         fontWeight: FontWeight.w400,
                         fontSize: 15,
                       ),
-                    )
+                    ),
                   ],
                 ),
 
                 Expanded(
-                    child:Image.asset(
-                      "assets/images/home_screen_logo.png",
-                    )
-                )
+                  child: Image.asset("assets/images/home_screen_logo.png"),
+                ),
               ],
             ),
           ),
 
-          SizedBox(
-            height: 15,
-          ),
+          SizedBox(height: 15),
 
           Row(
             children: [
-
               //1st show abr medicine taken today
-              Expanded(
-                  flex: 1,
-
-                  child:InkWell(
-                    borderRadius: BorderRadius.circular(15),
-
-                    onTap: (){
-                      debugPrint("Medicines taken button work successfully");
-                    },
-
-                    child: Ink(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 13,
-                        vertical: 10,
-                      ),
-
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.15),
-                            blurRadius: 12,
-                          )
-                        ],
-
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-
-                      child:Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: [
-
-                          Row(
-                            children: [
-
-                              Spacer(),
-
-                              Image.asset(
-                                "assets/images/medicine_logo.png",
-                                width: 50,
-                                height: 50,
-                              ),
-                            ],
-                          ),
-
-                          Text(
-                            getTakenMedicine(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 23,
-                              color: Colors.black,
-                            ),
-                          ),
-
-                          Text(
-                            "Medicines\ntaken today",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-              ),
-
-              SizedBox(
-                width: 13,
-              ),
-
-              //2nd show bar water glasses
               Expanded(
                 flex: 1,
 
-                child:InkWell(
+                child: InkWell(
                   borderRadius: BorderRadius.circular(15),
 
-                  onTap: ()async {
-
-                    bool result=await Navigator.push(
-                        context,
-
-                        MaterialPageRoute(
-                          builder: (context)=>HydrationTracker(),
-                        )
-                    );
-
-                    if(result){
-                      setState(() {
-
-                      });
-                    }
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UpcomingMedicines()));
                   },
 
                   child: Ink(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 13,
-                      vertical: 10,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
 
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -525,20 +373,95 @@ class _HomeScreenState extends State<HomeScreen>
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.15),
                           blurRadius: 12,
-                        )
+                        ),
                       ],
 
                       borderRadius: BorderRadius.circular(15),
                     ),
 
-                    child:Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
-
                         Row(
                           children: [
+                            Spacer(),
 
+                            Image.asset(
+                              "assets/images/medicine_logo.png",
+                              width: 50,
+                              height: 50,
+                            ),
+                          ],
+                        ),
+
+                        Text(
+                          "${getTakenMedicine()}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 23,
+                            color: Colors.black,
+                          ),
+                        ),
+
+                        Text(
+                          "Upcoming\nMedicines",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(width: 13),
+
+              //2nd show bar water glasses
+              Expanded(
+                flex: 1,
+
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(15),
+
+                  onTap: () async {
+                    bool result = await Navigator.push(
+                      context,
+
+                      MaterialPageRoute(
+                        builder: (context) => HydrationTracker(),
+                      ),
+                    );
+
+                    if (result) {
+                      setState(() {});
+                    }
+                  },
+
+                  child: Ink(
+                    padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.15),
+                          blurRadius: 12,
+                        ),
+                      ],
+
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+                        Row(
+                          children: [
                             Spacer(),
 
                             Image.asset(
@@ -564,33 +487,31 @@ class _HomeScreenState extends State<HomeScreen>
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
 
-              SizedBox(
-                width: 13,
-              ),
+              SizedBox(width: 13),
 
               //show 3rd bar steps walled
               Expanded(
                 flex: 1,
 
-                child:InkWell(
+                child: InkWell(
                   borderRadius: BorderRadius.circular(15),
 
-                  onTap: (){
-                    debugPrint("Step button work successfully");
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => StepCount()),
+                    );
                   },
 
                   child: Ink(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 13,
-                      vertical: 10,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
 
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -599,20 +520,18 @@ class _HomeScreenState extends State<HomeScreen>
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.15),
                           blurRadius: 12,
-                        )
+                        ),
                       ],
 
                       borderRadius: BorderRadius.circular(15),
                     ),
 
-                    child:Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
-
                         Row(
                           children: [
-
                             Spacer(),
 
                             Image.asset(
@@ -638,253 +557,193 @@ class _HomeScreenState extends State<HomeScreen>
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
 
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
 
           //for quick action button
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
 
             children: [
-
-              //1st quick action button caregiver mode
-              Expanded(
-                  flex: 1,
-
-                  child:InkWell(
-                      onTap: (){
-                        debugPrint("Caregiver button works successfully");
-                      },
-
-                      borderRadius: BorderRadius.circular(10),
-
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-
-                        children: [
-
-                          Ink(
-                            padding: EdgeInsets.all(6),
-                            width: 110,
-                            height: 110,
-
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-
-                            child:Image.asset(
-                              "assets/images/caregiver_logo.png",
-                            ),
-                          ),
-
-                          Text(
-                            "Caregiver\nMode",
-                            textAlign: TextAlign.center,
-
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          )
-                        ],
-                      )
-                  )
-              ),
-
-              SizedBox(
-                width: 14,
-              ),
+              SizedBox(width: 10),
 
               //2nd quick action button doctor appointment
               Expanded(
-                  flex: 1,
+                flex: 1,
 
-                  child:InkWell(
-                      onTap: (){
-                        debugPrint("doctor appointment button works successfully");
-                      },
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DoctorReminder()),
+                    );
+                  },
 
-                      borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10),
 
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
 
-                        children: [
+                    children: [
+                      Ink(
+                        width: 110,
+                        height: 110,
+                        padding: EdgeInsets.all(6),
 
-                          Ink(
-                            width: 110,
-                            height: 110,
-                            padding: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
 
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
+                        child: Image.asset(
+                          "assets/images/doctor_appointment_logo.png",
+                        ),
+                      ),
 
-                            child:Image.asset(
-                              "assets/images/doctor_appointment_logo.png",
-                            ),
-                          ),
+                      Text(
+                        "doctor\nappointment",
+                        textAlign: TextAlign.center,
 
-                          Text(
-                            "doctor\nappointment",
-                            textAlign: TextAlign.center,
-
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          )
-                        ],
-                      )
-                  )
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
 
-              SizedBox(
-                width: 14,
-              ),
+              SizedBox(width: 14),
 
               //3rd quick action button Add Medicine
               Expanded(
-                  flex: 1,
+                flex: 1,
 
-                  child:InkWell(
-                      onTap: () async{
+                child: InkWell(
+                  onTap: () async {
+                    bool result = await Navigator.push(
+                      context,
 
-                        bool result = await Navigator.push(
-                            context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MedicineEntryScreen(userPhone: widget.userPhone),
+                      ),
+                    );
 
-                            MaterialPageRoute(
-                              builder: (context)=>MedicineEntryScreen(
-                                userPhone: widget.userPhone,
-                              ),
-                            )
-                        );
+                    if (result == true) setState(() {});
+                  },
 
-                        if(result==true)
-                          setState(() {
+                  borderRadius: BorderRadius.circular(10),
 
-                          });
-                      },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
 
-                      borderRadius: BorderRadius.circular(10),
+                    children: [
+                      Ink(
+                        width: 110,
+                        height: 110,
+                        padding: EdgeInsets.all(6),
 
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
 
-                        children: [
+                        child: Image.asset(
+                          "assets/images/add_medicine_logo.png",
+                        ),
+                      ),
 
-                          Ink(
-                            width: 110,
-                            height: 110,
-                            padding: EdgeInsets.all(6),
+                      Text(
+                        "Add\nMedicine",
+                        textAlign: TextAlign.center,
 
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-
-                            child:Image.asset(
-                              "assets/images/add_medicine_logo.png",
-                            ),
-                          ),
-
-                          Text(
-                            "Add\nMedicine",
-                            textAlign: TextAlign.center,
-
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          )
-                        ],
-                      )
-                  )
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
 
-              SizedBox(
-                width: 14,
-              ),
+              SizedBox(width: 14),
 
               //4th quick action button Medicine Refill
               Expanded(
-                  flex: 1,
+                flex: 1,
 
-                  child:InkWell(
-                      onTap: (){
-                        debugPrint("Medicine Refill button works successfully");
-                      },
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RefillReminderScreen(),
+                      ),
+                    );
+                  },
 
-                      borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10),
 
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
 
-                        children: [
+                    children: [
+                      Ink(
+                        width: 110,
+                        height: 110,
+                        padding: EdgeInsets.all(6),
 
-                          Ink(
-                            width: 110,
-                            height: 110,
-                            padding: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
 
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
+                        child: Image.asset(
+                          "assets/images/medicine_refill_logo.png",
+                        ),
+                      ),
 
-                            child:Image.asset(
-                              "assets/images/medicine_refill_logo.png",
-                            ),
-                          ),
+                      Text(
+                        "Medicine\nRefill",
+                        textAlign: TextAlign.center,
 
-                          Text(
-                            "Medicine\nRefill",
-                            textAlign: TextAlign.center,
-
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          )
-                        ],
-                      )
-                  )
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
+              SizedBox(width: 10),
             ],
           ),
 
-          ...List.generate(
-              medicine.length>3?
-              3:
-              medicine.length,
-
-                  (index){
-                return _medicineCard(
-                  name: medicine[index].name,
-                  strength: medicine[index].strength,
-                  quantity: medicine[index].quantity,
-                  mealTiming: medicine[index].mealTiming,
-                  reminderQuantity: medicine[index].reminderTime?.length ?? 0,
-                  index: index,
-                );
-              }
-          )
+          ...List.generate(medicine.length > 3 ? 3 : medicine.length, (index) {
+            return _medicineCard(
+              name: medicine[index].name,
+              strength: medicine[index].strength,
+              quantity: medicine[index].quantity,
+              mealTiming: medicine[index].mealTiming,
+              reminderQuantity: medicine[index].reminderTime?.length ?? 0,
+              index: index,
+            );
+          }),
         ],
       ),
     );
